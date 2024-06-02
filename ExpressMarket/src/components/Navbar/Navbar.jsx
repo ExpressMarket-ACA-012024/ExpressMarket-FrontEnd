@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import logo from '../../assets/img/ticketifyLogo.png'
 import Sidebar from '../Sidebar/Sidebar'
 import iconNav from '../../assets/img/iconNav.png'
 
@@ -12,10 +11,10 @@ const Navbar = () => {
 
     return (
         <div className='w-full'>
-            <nav className='grid grid-flow-col-dense w-full bg-penn-blue py-3.5 md:py-0'>
+            <nav className='grid grid-flow-col-dense w-full bg-emerald-700 py-3.5 md:py-0'>
                 <div className='w-fit h-full'>
                     <a href={'/'} className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
-                        <img src={logo} className="w-24" alt="Ticketify Logo" />
+
                     </a>
                 </div>
                 <div className='w-auto h-full my-auto'>
