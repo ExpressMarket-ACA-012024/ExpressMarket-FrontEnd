@@ -5,6 +5,7 @@ import Carousel from '../../components/Carousel/Carousel'
 import Slider from '../../components/Carousel/Slider'
 import { useEffect, useState } from 'react';
 import { getEvents } from '../../services/UserService'
+import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
 
 function Home() {
 
@@ -25,7 +26,7 @@ function Home() {
     return (
         <div>
             <div className="flex flex-wrap justify-center">
-                <Navbar />
+                <NavbarAdmin />
                 <Carousel />
                 <div className="w-full md:w-1/3"></div>
                 <div className="w-full">

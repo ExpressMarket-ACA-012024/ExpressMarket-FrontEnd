@@ -11,8 +11,8 @@ const Sidebar = () => {
     }
 
     return (
-        <div className='isolate relative left-0 overflow-y-auto py-4 w-64 md:w-1/4 bg-emerald-700 shadow-lg h-screen font-montserrat'>
-            <ul className="">
+        <div className='relative left-0 overflow-y-auto py-4 w-64 md:w-1/4 bg-emerald-700 shadow-lg h-screen font-montserrat'>
+            <ul>
                 <li>
                     <a href={'/'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
                         Inicio
