@@ -24,9 +24,9 @@ function Home() {
 
     return (
         <div>
-            <Navbar />
-            <Carousel />
             <div className="flex flex-wrap justify-center">
+                <Navbar />
+                <Carousel />
                 <div className="w-full md:w-1/3"></div>
                 <div className="w-full">
                     <div className="text-center font-montserrat text-3xl m-14 text-pure-indigo w-2/3 mx-auto">

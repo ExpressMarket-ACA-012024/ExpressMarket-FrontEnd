@@ -10,7 +10,7 @@ const SidebarAdmin = () => {
 
     return (
         <div>
-            <ul className="absolute z-10 right-0 py-2 w-64 md:w-1/4 bg-emerald-700 shadow-lg h-full font-montserrat">
+            <ul className="absolute z-10 left-0 py-2 w-64 md:w-1/4 bg-emerald-700 shadow-lg h-full font-montserrat">
                 <li>
                     <a href={'../exchange-ticket'} className="block px-4 py-2 text-sm text-white hover:bg-emerald-400">
                         Canjear Entrada
