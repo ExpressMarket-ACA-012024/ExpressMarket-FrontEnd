@@ -1,4 +1,3 @@
-import logo from '../../assets/img/ticketifyLogo.png'
 import { useAppContext } from '../../context/AppContext'
 import { getToken } from '../../context/AppContext';
 
@@ -12,75 +11,92 @@ const Sidebar = () => {
     }
 
     return (
-        <div>
-            <ul className="absolute z-10 right-0 py-2 w-64 md:w-1/4 bg-penn-blue shadow-lg h-full">
+        <div className='relative left-0 overflow-y-auto py-4 w-64 md:w-1/4 bg-emerald-700 shadow-lg h-screen font-montserrat'>
+            <ul>
                 <li>
-                    <a href={'/'} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
+                    <a href={'/'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
                         Inicio
                     </a>
                 </li>
                 {!getToken()  ? (
                     <li>
-                        <a href={'../login'} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
+                        <a href={'../login'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
                             Iniciar sesión
                         </a>
                     </li>
                 ) : null}
+                {getToken() ? (
                 <li>
-                    <a href={'../profile'} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
+                    <a href={'../profile'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
                         Perfil
                     </a>
+                </li>) : null}
+                <li>
+                    <a href={'/'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
+                        Abarrotes
+                    </a>
                 </li>
                 <li>
-                    <a href={'../../events'} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
-                        Eventos
+                    <a href={'/'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
+                        Bebidas
+                    </a>
+                </li>
+                <li>
+                    <a href={'/'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
+                        Cuidado personal
+                    </a>
+                </li>
+                <li>
+                    <a href={'/'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
+                        Cuidado del hogar
+                    </a>
+                </li>
+                <li>
+                    <a href={'/'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
+                        Cuidado de mascotas
+                    </a>
+                </li>
+                <li>
+                    <a href={'/'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
+                        Productos congelados
                     </a>
                 </li>
                 {getToken() ? (
                     <li>
-                        <a href={'../../mytickets'} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
-                            Mis Tickets
-                        </a>
-                    </li>
-                ) : null}
-                {getToken() ? (
-                    <li>
-                        <a href={'./scanner'} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
-                            Scanner
+                        <a href={'../../mytickets'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
+                            Mis pedidos
                         </a>
                     </li>
                 ) : null}
                 <li>
-                    <a href={'../contactus'} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
+                    <a href={'../contactus'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
                         Contáctanos
                     </a>
                 </li>
                 <li>
-                    <a href={'../faq'} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
+                    <a href={'../faq'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
                         Preguntas frecuentes
                     </a>
                 </li>
                 <li>
-                    <a href={'../help'} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
+                    <a href={'../help'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
                         Ayuda
                     </a>
                 </li>
                 <li>
-                    <a href={'../aboutus'} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
+                    <a href={'../aboutus'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
                         Quiénes somos
                     </a>
                 </li>
                 {getToken() ? (
                     <li>
-                        <a onClick={logoutHandler} className="block px-4 py-2 text-sm text-white hover:bg-violet-blue">
+                        <a onClick={logoutHandler} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
                             Cerrar sesion
                         </a>
                     </li>
                 ) : null}
-                <li className='absolute bottom-0 left-0'>
-                    <a href="#" className="block px-4 py-2">
-                        <img src={logo} className='w-32' />
-                    </a>
+                <li>
+                    <a href={''} className="block px-6 py-4  text-white"></a>
                 </li>
             </ul>
         </div>
