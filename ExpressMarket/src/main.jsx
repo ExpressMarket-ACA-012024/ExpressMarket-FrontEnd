@@ -13,7 +13,7 @@ import ContactUs from './pages/ContactUs/ContactUs'
 import PreOrder from './pages/PreOrder/PreOrder'
 import CartOrder from './pages/CartOrder/CartOrder'
 import Payment from './pages/Payment/Payment'
-import Events from './pages/Events/Events'
+import Products from './pages/Product/Products'
 import MyTickets from './pages/MyTickets/Mytickets'
 import Scanner from './pages/ScannerView/ScannerView'
 import Profile from './pages/Profile/Profile'
@@ -83,8 +83,8 @@ const router = createBrowserRouter([
     element: <Payment/>,
   },
   {
-    path: "/events",
-    element:<PrivateRoute role={["Admin"]} children={<Events/>} />,
+    path: "/products",
+    element:<Products/>,
   },
   {
     path: "/mytickets",
