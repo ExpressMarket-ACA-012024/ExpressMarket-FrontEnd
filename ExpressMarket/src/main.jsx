@@ -40,7 +40,7 @@ import ExchangeTicket from './pages/ExchangeTicket/ExchangeTicket'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Profile/>,
+    element: <Home/>,
   },
   {
     path: "/login",
