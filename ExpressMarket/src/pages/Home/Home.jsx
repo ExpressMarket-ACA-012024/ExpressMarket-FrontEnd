@@ -4,8 +4,6 @@ import Navbar from "../../components/Navbar/Navbar"
 import Carousel from '../../components/Carousel/Carousel'
 import Slider from '../../components/Carousel/Slider'
 import { getEvents } from '../../services/UserService'
-import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
-import logo from "../../assets/img/ExpressMarketLogo.png";
 import lacteos from "../../assets/img/lacteos2.jpg";
 import fyv from "../../assets/img/frutasyverduras.jpg";
 import personal from "../../assets/img/cuidadopersonal.jpg";
@@ -16,7 +14,8 @@ import colgate from "../../assets/img/colgate.jpg";
 import cubata from "../../assets/img/cubata.jpg";
 import diamond from "../../assets/img/diamond.jpg";
 import banner from "../../assets/img/bannerhome.png";
-
+import "react-multi-carousel/lib/styles.css";
+import Carousel2 from "react-multi-carousel";
 
 function Home() {
 
@@ -33,7 +32,26 @@ function Home() {
             fetchAllEvents();
         }
     }, [images]);
-    
+
+    const responsive = {
+        superLargeDesktop: {
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 5
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
+    };
+
     return (
         <div>
             <div className="flex flex-wrap justify-center">
@@ -66,9 +84,37 @@ function Home() {
                 </div>
                 <img  className=" my-9" src={banner} />
             </div>
-            <div className='text-center'>
-                <p className= "mt-5 mb-2 text-3xl font-normal font-montserrat">Productos de temporada</p>
-                <div className="grid grid-cols-1 gap-6 mx-auto mt-6 max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+            <div className='px-4 mx-auto mt-8 text-center max-w-7xl'>
+                <p className= "mt-5 mb-2 text-3xl font-normal font-montserrat">Productos en oferta</p>
+                <Carousel2 responsive={responsive} infinite={true} arrows={true}>
+                    <HomeProduct
+                            image={alpina}
+                            name="Leche Entera"
+                            category="Lácteos"
+                            price={2.99}
+                            savingsPercentage={5}
+                    />
+                    <HomeProduct
+                            image={cubata}
+                            name="Manzanas"
+                            category="Frutas y Verduras"
+                            price={1.49}
+                            savingsPercentage={10}
+                    />
+                    <HomeProduct
+                            image={diamond}
+                            name="Jabón Corporal"
+                            category="Cuidado Personal"
+                            price={3.99}
+                            savingsPercentage={10}
+                    />
+                    <HomeProduct
+                            image={colgate}
+                            name="Detergente"
+                            category="Cuidado del Hogar"
+                            price={4.49}
+                            savingsPercentage={5}
+                    />
                     <HomeProduct
                             image={alpina}
                             name="Leche Entera"
@@ -97,7 +143,7 @@ function Home() {
                             price={4.49}
                             savingsPercentage={10}
                     />
-                </div>
+                </Carousel2>
             </div>
             <Slider images={images} />
             <Footer />
