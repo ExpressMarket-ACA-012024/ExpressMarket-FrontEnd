@@ -26,11 +26,11 @@ function Home() {
     return (
         <div>
             <div className="flex flex-wrap justify-center">
-                <NavbarAdmin />
+                <Navbar/>
                 <Carousel />
                 <div className="w-full md:w-1/3"></div>
                 <div className="w-full">
-                    <div className="text-center font-montserrat text-3xl m-14 text-pure-indigo w-2/3 mx-auto">
+                    <div className="w-2/3 mx-auto text-3xl text-center font-montserrat m-14 text-pure-indigo">
                         <p className='mb-2'>
                             En Ticketify podrás encontrar las entradas para los mejores conciertos, festivales, deportes y eventos en vivo de todo
                             el país.
@@ -49,11 +49,11 @@ function Home() {
                 <div className="w-full md:w-1/3"></div>
             </div>
 
-            <hr className="bg-silver m-2" />
+            <hr className="m-2 bg-silver" />
 
             <div>
                 <a href={'/events'}>
-                    <p className='text-5xl ml-4 mt-6 text-pure-indigo font-montserrat font-extrabold'>Próximos eventos </p>
+                    <p className='mt-6 ml-4 text-5xl font-extrabold text-pure-indigo font-montserrat'>Próximos eventos </p>
                 </a>
             </div>
 
