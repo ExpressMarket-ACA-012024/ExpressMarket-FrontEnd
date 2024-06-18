@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import QRCode from 'react-qr-code'
 import Footer from "../../components/Footer/Footer"
 import Navbar from "../../components/Navbar/Navbar"
 import { getUser, updateUserPassword } from '../../services/UserService'
+import snapy from "../../assets/img/SNOPY.png"
+
 
 function Profile() {
-    const [qrData, setQRData] = useState('')
     const [newPassword, setNewPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [passwordError, setPasswordError] = useState("")
@@ -23,9 +23,6 @@ function Profile() {
         fetchData();
     }, [setUser]);
 
-    useEffect(() => {
-        setQRData(user?.email)
-    }, [user])
 
     const handleNewPasswordChange = (e) => {
         setNewPassword(e.target.value);
@@ -50,69 +47,46 @@ function Profile() {
         setConfirmPassword("");
         setPasswordError("");
     }
-
-
     return (
-        <div className='font-montserrat'>
-            <Navbar />
-            <p className="m-4 text-pure-indigo text-4xl sm:text-5xl font-extrabold">
-                Perfil
-            </p>
-            <div className="flex flex-col items-center">
-                <div className='border rounded-lg shadow-md m-16 pl-16 pr-16'>
-                    {qrData && (
-                        <div>
-                            <div key={user?.id} className="flex flex-col items-center m-4">
-                                <p className="text-center mb-2 font-light">{user?.firstname}</p>
-                                <p className="text-center mb-2 font-medium">{user?.email}</p>
-                                <div className="flex justify-center m-6">
-                                    <QRCode value={qrData} />
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    <hr className='h-0.1 bg-silver' />
-
-                    <form onSubmit={handleSubmit} className="flex flex-col m-4">
-                        <h2 className="text-xl font-semibold text-pure-indigo">Cambiar contraseña</h2>
-                        <div className="flex flex-col my-4">
-                            <label htmlFor="newPassword" className="mb-2">
-                                Nueva contraseña
-                            </label>
-                            <input
-                                type="password"
-                                id="newPassword"
-                                value={newPassword}
-                                onChange={handleNewPasswordChange}
-                                className="border border-gray-300 rounded px-2 py-1"
-                            />
-                        </div>
-                        <div className="flex flex-col my-4">
-                            <label htmlFor="confirmPassword" className="mb-2">
-                                Confirmar nueva contraseña
-                            </label>
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                value={confirmPassword}
-                                onChange={handleConfirmPasswordChange}
-                                className="border border-gray-300 rounded px-2 py-1"
-                            />
-                        </div>
-                        {passwordError && <p className="text-red-500">{passwordError}</p>}
-                        <button
-                            type="submit"
-                            className="bg-pure-indigo text-white px-4 py-2 rounded-full m-4"
-                        >
-                            Guardar contraseña
-                        </button>
-                    </form>
-                </div>
+        <div className="min-h-screen w-screen bg-purple-600 flex items-start pt-16 relative">
+          <div className="bg-white rounded-t-lg shadow-lg w-full mx-4 p-8 text-center h-[calc(100vh-4rem)] relative">
+            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+              <img
+                src={snapy}
+                alt="User"
+                className="w-32 h-32 rounded-full border-4 border-white"
+              />
             </div>
-            <Footer />
+            <h1 className="text-2xl font-bold mb-8 mt-28 ">Nombre del Usuario</h1>
+            <div className="grid grid-cols-1 gap-8 mb-8">
+              <div className="flex items-center justify-center">
+                <div className="w-full md:w-96 text-left">
+                  <p className="text-gray-600 font-semibold">Teléfono:</p>
+                  <p className="bg-gray-100 text-gray-800 rounded px-4 py-2">123-456-7890</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="w-full md:w-96 text-left">
+                  <p className="text-gray-600 font-semibold">Email:</p>
+                  <p className="bg-gray-100 text-gray-800 rounded px-4 py-2">usuario@ejemplo.com</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="w-full md:w-96 text-left">
+                  <p className="text-gray-600 font-semibold">Dirección:</p>
+                  <p className="bg-gray-100 text-gray-800 rounded px-4 py-2">Calle Ejemplo 123</p>
+                </div>
+              </div>
+            </div>
+            <div className="absolute bottom-8 left-16">
+              <button className="bg-purple-600 text-white py-2 px-4 rounded shadow-md">Ir Atrás</button>
+            </div>
+            <div className="absolute bottom-8 right-16">
+              <button className="bg-purple-600 text-white py-2 px-4 rounded shadow-md">En Blanco</button>
+            </div>
+          </div>
         </div>
-    )
-}
+      );
+}   
 
 export default Profile
