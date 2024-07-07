@@ -59,7 +59,7 @@ const Navbar = () => {
         <div className="flex items-center ml-auto mr-4 space-x-4 text-white">
           <button className="flex items-center px-4 py-2 transition duration-200 rounded-lg bg-emerald-800 hover:bg-emerald-600">
             <FaUser className="mr-2" />
-            <span>Iniciar sesión</span>
+            <span><a href={'./login'}> Iniciar sesión</a></span>
           </button>
           <div className="relative flex items-center" ref={cartRef}>
             <div className="h-6 mx-4 border-l border-white"></div>
