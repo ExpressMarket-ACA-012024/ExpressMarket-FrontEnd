@@ -39,7 +39,7 @@ function Login() {
   if (getToken() && getRoleNames()?.includes("User")) {
     window.location.href = './';
   } else if (getToken() && getRoleNames()?.includes("Admin")) {
-    window.location.href = './event-admin';
+    window.location.href = './products-admin';
   }
 
   return (

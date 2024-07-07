@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import logo from "../../assets/img/ExpressMarketLogo.png";
 import { FaUser, FaShoppingCart, FaBars, FaSearch, FaBoxOpen } from "react-icons/fa";
+import { useAppContext, getToken } from '../../context/AppContext';
 
 const Navbar = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -57,10 +58,12 @@ const Navbar = () => {
           <FaSearch className="absolute transform -translate-y-1/2 right-4 top-1/2 text-emerald-700" />
         </div>
         <div className="flex items-center ml-auto mr-4 space-x-4 text-white">
-          <button className="flex items-center px-4 py-2 transition duration-200 rounded-lg bg-emerald-800 hover:bg-emerald-600">
-            <FaUser className="mr-2" />
-            <span><a href={'./login'}> Iniciar sesión</a></span>
-          </button>
+          {!getToken() ? (
+            <button className="flex items-center px-4 py-2 transition duration-200 rounded-lg bg-emerald-800 hover:bg-emerald-600">
+              <FaUser className="mr-2" />
+              <span><a href={'./login'}> Iniciar sesión</a></span>
+            </button>)
+          : null}
           <div className="relative flex items-center" ref={cartRef}>
             <div className="h-6 mx-4 border-l border-white"></div>
             <button onClick={toggleCart} className="flex items-center">

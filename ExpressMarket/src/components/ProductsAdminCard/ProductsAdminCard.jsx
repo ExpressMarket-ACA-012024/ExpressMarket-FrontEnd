@@ -20,7 +20,7 @@ const URLImageRegex = /(https?:\/\/.*\.(?:png|jpg))/i;
 const DEFAULT_IMG =
   "https://i.pinimg.com/564x/7e/96/cb/7e96cb6920cfc61852ec4b8c119d8b3c.jpg";
 
-const EventAdminCard = ({ events = [], categories = [] }) => {
+const ProductsAdminCard = ({ events = [], categories = [] }) => {
   moment.locale();
 
   const [eventToEdit, setEventToEdit] = useState({});
@@ -483,4 +483,4 @@ function EditEventModal({ event, categories, onClose }) {
   );
 }
 
-export default EventAdminCard;
+export default ProductsAdminCard;
