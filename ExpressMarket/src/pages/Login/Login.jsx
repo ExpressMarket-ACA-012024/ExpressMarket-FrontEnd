@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Logo from '../../assets/img/ticketifyLogo.png';
+import Logo from '../../assets/img/ExpressMarketLogo.png';
 import { useAppContext, getToken, getRoleNames } from '../../context/AppContext';
 
 function Login() {
@@ -44,22 +44,23 @@ function Login() {
 
   return (
     <>
-      <div className='bg-penn-blue h-screen w-screen flex justify-center'>
-        <div className='bg-white h-[24rem] w-[20rem] lg:w-[20rem] m-auto p-auto rounded-xl'>
+      <div className='bg-emerald-700 h-screen w-screen flex justify-center'>
+        <div className='bg-white h-[28rem] w-[20rem] lg:w-[20rem] m-auto p-auto rounded-xl shadow-xl shadow-gray-800'>
           <div className='flex justify-between items-center flex-col h-full w-full'>
-            <div className='justify-center'>
-              <img className='h-28' src={Logo} alt='ticketify' />
+            <div className='justify-center text-center'>
+              <img className='w-36 my-6' src={Logo} alt='Express Market Logo' />
+              <p className='font-montserrat text-lg text-orange-600 text-center font-bold'>Express Market</p>
             </div>
-            <form className='mt-8' onSubmit={onSubmit}>
+            <form className='mt-4' onSubmit={onSubmit}>
               <div>
                 <input
                   autoComplete='off'
                   id='email'
                   name='email'
                   type='email'
-                  className={`peer placeholder-silver text-md font-light h-10 w-72 border shadow-sm rounded-lg border-gray-300 text-gray-900 focus:outline-none mb-4 ${emailError ? 'border-rose-600' : 'border-gray-300'
+                  className={`peer placeholder-emerald-500 text-md text-emerald-800 h-10 w-72 border-2 shadow-sm rounded-lg border-emerald-700 focus:outline-none mb-4 ${emailError ? 'border-rose-600' : 'border-gray-300'
                     }`}
-                  placeholder='Correo'
+                  placeholder='Correo electrónico'
                   onChange={(e) => onChange(e, setEmail)}
                   value={email}
                   required
@@ -73,27 +74,27 @@ function Login() {
                     id='password'
                     name='password'
                     type='password'
-                    className='mt-4 peer placeholder-silver text-md font-light h-10 w-72 border shadow-sm rounded-lg border-gray-300 text-gray-900 focus:outline-none'
+                    className='mt-4 peer placeholder-emerald-500 text-md h-10 w-72 border-2 shadow-sm rounded-lg border-emerald-700 text-emerald-800 focus:outline-none'
                     placeholder='Contraseña'
                     onChange={(e) => onChange(e, setPassword)}
                     value={password}
                   />
                 </div>
                 <div>
-                  <a href={'./sendemailresetpassword'}>
+                  {/*<a href={'./sendemailresetpassword'}>
                     <p className='text-pure-indigo py-2 text-base font-light'>
                       Olvidaste la contraseña?
                     </p>
-                  </a>
+                  </a>*/}
                 </div>
               </div>
 
-              <div className='flex flex-col gap-5 m-5 text-white'>
+              <div className='flex flex-col gap-5 my-8 text-white'>
                 <button
                   type='submit'
-                  className='bg-pure-indigo rounded-2xl p-2 text-center h-10 w-64 font-light text-sm shadow-silver shadow-md'
+                  className='bg-emerald-950 rounded-lg p-2 text-center h-12 w-72 font-bold shadow-silver shadow-md hover:bg-emerald-500'
                 >
-                  Iniciar sesión
+                  INICIAR SESIÓN
                 </button>
               </div>
             </form>
