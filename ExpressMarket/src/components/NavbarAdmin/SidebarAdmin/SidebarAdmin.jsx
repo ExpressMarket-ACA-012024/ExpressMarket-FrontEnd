@@ -17,7 +17,7 @@ const SidebarAdmin = () => {
                     </a>
                 </li>
                 <li>
-                    <a href={'../event-admin'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
+                    <a href={'../products-admin'} className="block px-6 py-4  text-white hover:bg-emerald-400  hover:font-extrabold">
                         Administrar eventos
                     </a>
                 </li>

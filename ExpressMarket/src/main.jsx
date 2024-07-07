@@ -18,7 +18,7 @@ import MyTickets from './pages/MyTickets/Mytickets'
 import Scanner from './pages/ScannerView/ScannerView'
 import Profile from './pages/Profile/Profile'
 import QrTicket from './pages/QrTickets/QrTicket'
-import EventAdmin from './pages/EventAdmin/EventAdmin'
+import ProductsAdmin from './pages/ProductsAdmin/ProductsAdmin'
 import TierAdmin from './pages/TierAdmin/TierAdmin'
 import Error404 from './pages/Error404/Error404'
 import UserAdmin from './pages/UserAdmin/UserAdmin';
@@ -103,8 +103,8 @@ const router = createBrowserRouter([
     element: <QrTicket/>,
   },
   {
-    path: "/event-admin",
-    element: <EventAdmin /> ,
+    path: "/products-admin",
+    element: <ProductsAdmin /> ,
   },
   {
     path: "/tiers",

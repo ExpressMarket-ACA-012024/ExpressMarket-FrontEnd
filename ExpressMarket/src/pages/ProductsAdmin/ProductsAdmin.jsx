@@ -1,5 +1,5 @@
 import Footer from "../../components/Footer/Footer"
-import EventAdminCard from "../../components/EventAdminCard/EventAdminCard"
+import ProductsAdminCard from "../../components/ProductsAdminCard/ProductsAdminCard"
 import EventsForm from "../../components/EventsForm/EventsForm"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
@@ -12,7 +12,7 @@ import { Select } from "flowbite-react"
 
 const DEFAULT_IMG = "https://ipmark.com/wp-content/uploads/eventos-de-marketing-2021.jpg"
 
-const EventAdmin = () => {
+const ProductsAdmin = () => {
 
     const [page, setPage] = useState(0);
     const [isNextPageAvailable, setIsNextPageAvailable] = useState(true);
@@ -199,7 +199,7 @@ const EventAdmin = () => {
                 pauseOnHover
                 theme="colored"
             />
-            <EventAdminCard events={events} categories={categories} />
+            <ProductsAdminCard events={events} categories={categories} />
             <div className="text-center mx-auto mt-8">
                 <button className='rounded-full left-2 border border-pure-indigo bg-light-gray text-pure-indigo hover:bg-pure-indigo hover:text-white w-16 h-10 p-2 ml-4 md:text-sm my-auto font-montserrat' onClick={prev}>
                     <span><ArrowBackIcon /></span>
@@ -220,4 +220,4 @@ const EventAdmin = () => {
     )
 }
 
-export default EventAdmin
+export default ProductsAdmin
