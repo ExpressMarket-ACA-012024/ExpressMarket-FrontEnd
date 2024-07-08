@@ -2,8 +2,8 @@ import { Select } from "flowbite-react"
 import SaveButton from "../SaveButton/SaveButton"
 import { useState } from "react"
 import { toast } from "react-toastify"
-import { allTierServices } from "../../services/TierServices"
-import { allEventServices } from "../../services/EventServices"
+import { allCompanyServices } from "../../services/CompanyServices"
+import { allProductServices } from "../../services/ProductServices"
 
 const TiersForm = ({ events = [] }) => {
 
@@ -19,7 +19,7 @@ const TiersForm = ({ events = [] }) => {
 
     async function getEventId(name) {
         if (typeof (name) === undefined || name !== '') {
-            const tierResponse = await allEventServices.getEventByTitle(name)
+            const tierResponse = await allProductServices.getEventByTitle(name)
             console.log(tierResponse)
             setEventId(tierResponse.data[0].id)
             setEvent(tierResponse.data[0].title)
@@ -45,7 +45,7 @@ const TiersForm = ({ events = [] }) => {
                 toast("Campos vacíos, por favor completarlos", { type: "warning"})
             } else {
                 getEventId(event)
-                const response = await allTierServices.createTier(tier, price, capacity, eventId)
+                const response = await allCompanyServices.createTier(tier, price, capacity, eventId)
     
                 if (!response.success) {
                     toast("Algo salió mal!!! Intentelo en otro momento", { type: "error" })

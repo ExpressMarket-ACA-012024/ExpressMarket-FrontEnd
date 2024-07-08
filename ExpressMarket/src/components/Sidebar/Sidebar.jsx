@@ -7,7 +7,7 @@ const Sidebar = () => {
 
     const logoutHandler = () => {
         logout()
-        window.location.href = '../../'
+        window.location.href = '/'
     }
 
     return (

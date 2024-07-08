@@ -51,14 +51,14 @@ function Login() {
               <img className='w-36 my-6' src={Logo} alt='Express Market Logo' />
               <p className='font-montserrat text-lg text-orange-600 text-center font-bold'>Express Market</p>
             </div>
-            <form className='mt-4' onSubmit={onSubmit}>
+            <form className='' onSubmit={onSubmit}>
               <div>
                 <input
                   autoComplete='off'
                   id='email'
                   name='email'
                   type='email'
-                  className={`peer placeholder-emerald-500 text-md text-emerald-800 h-10 w-72 border-2 shadow-sm rounded-lg border-emerald-700 focus:outline-none mb-4 ${emailError ? 'border-rose-600' : 'border-gray-300'
+                  className={`peer placeholder-emerald-500 text-md text-emerald-800 mt-2 h-10 w-72 border-2 shadow-sm rounded-lg border-emerald-800 focus:outline-none  ${emailError ? 'border-rose-600' : 'border-gray-300'
                     }`}
                   placeholder='Correo electrónico'
                   onChange={(e) => onChange(e, setEmail)}
@@ -89,13 +89,14 @@ function Login() {
                 </div>
               </div>
 
-              <div className='flex flex-col gap-5 my-8 text-white'>
+              <div className='flex flex-col gap-5 my-4 text-white'>
                 <button
                   type='submit'
                   className='bg-emerald-950 rounded-lg p-2 text-center h-12 w-72 font-bold shadow-silver shadow-md hover:bg-emerald-500'
                 >
                   INICIAR SESIÓN
                 </button>
+                <a className='font-montserrat text-emerald-800 text-center font-medium' href="/">Volver a la página principal </a>
               </div>
             </form>
           </div>
