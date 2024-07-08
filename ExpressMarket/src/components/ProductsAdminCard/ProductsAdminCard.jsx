@@ -44,8 +44,6 @@ const ProductsAdminCard = ({ products = [], categories = [], companies = [] }) =
   async function getProductById(id) {
     try {
       const response = await allProductServices.getProductById(id);
-      console.log("get product")
-      console.log(response)
       if (!response.success) {
         toast("Algo salió mal", { type: "error" });
         throw new Error("Something was wrong");
@@ -123,7 +121,6 @@ const ProductsAdminCard = ({ products = [], categories = [], companies = [] }) =
 };
 
 function EditEventModal({ product, categories, companies, onClose }) {
-    console.log(product)
 
   const [name, setName] = useState(product.name);
   const [image, setImage] = useState(product.image);
@@ -150,12 +147,10 @@ function EditEventModal({ product, categories, companies, onClose }) {
   }
 
   const onCategoryChange = (e, save) => {
-    console.log(e.target.value)
     save(e.target.value);
 }
 
 const onCompanyChange = (e, save) => {
-    console.log(e.target.value)
     save(e.target.value);
 }
 
@@ -215,14 +210,12 @@ const onCompanyChange = (e, save) => {
           toast("Campos vacíos, favor completar formulario", { type: "warning" });
         }
       } else if (!isNewImageUploaded) {
-        console.log("ok")
         if (
           name != product.name && name != '' ||
           price != product.price && price != '' ||
           description != product.description && description != '' ||
           (category != product.category.id && newImage != "")
         ) {
-          console.log("1")
           if (IMAGE_URL !== "") {
             setNewImage(IMAGE_URL);
             newImg = IMAGE_URL;

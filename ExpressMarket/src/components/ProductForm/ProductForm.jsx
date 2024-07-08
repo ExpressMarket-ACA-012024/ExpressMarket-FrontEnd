@@ -27,36 +27,11 @@ const ProductForm = ({ events = [], categories = [], companies = [] }) => {
         save(e.target.value);
     }
 
-    /*async function getCategoryId(name) {
-        if (typeof (name) === undefined || name !== '') {
-            const categoryResponse = await allCategoryServices.getCategory(name)
-            console.log(categoryResponse)
-            setCategory(categoryResponse.data.id)
-            setProductCategory(categoryResponse.data.category)
-            return categoryResponse.data.id
-        } else {
-            toast("Seleccione una categoría válida", { type: "warning" })
-        }
-    }*/
-
-    /*async function getCompanyId(name) {
-        if (typeof (name) === undefined || name !== '') {
-            const companyResponse = await allCompanyServices.getOneById(name)
-            setCompany(companyResponse.data.id)
-            setProductCompany(companyResponse.data.company)
-            return categoryResponse.data.id
-        } else {
-            toast("Seleccione una categoría válida", { type: "warning" })
-        }
-    }*/
-
     const onCategoryChange = (e, save) => {
-        console.log(e.target.value)
         save(e.target.value);
     }
 
     const onCompanyChange = (e, save) => {
-        console.log(e.target.value)
         save(e.target.value);
     }
 

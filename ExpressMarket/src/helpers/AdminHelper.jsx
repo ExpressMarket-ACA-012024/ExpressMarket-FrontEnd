@@ -4,7 +4,8 @@ export const BASE_URL = "http://localhost:8080/";
 export const CLOUD_NAME = 'duxqteogb'
 export const UPLOAD_PRESET = 'jw3jwwpb'
 
-// Event
+// Product
+// Petición get todos los productos
 export const fetchAllProducts = async ({ title, size, page }) => {
     const response = await axios.get(`${BASE_URL}product/get/all`,
         {
@@ -21,6 +22,7 @@ export const fetchAllProducts = async ({ title, size, page }) => {
     if (response.status === 200)
         return response.data 
 };
+
 /*export const fetchAllProducts = async ({ title, size, page }) => {
     const response = await axios.get(`${BASE_URL}product/get/all`,
         {
@@ -38,6 +40,7 @@ export const fetchAllProducts = async ({ title, size, page }) => {
         return response.data 
 };*/
 
+// Petición get producto por id
 export const getProductById = async ({ id }) => {
     const response = await axios.get(`${BASE_URL}product/get/one/${id}`,
         {
@@ -45,9 +48,6 @@ export const getProductById = async ({ id }) => {
                 "Authorization": `Bearer ${getToken()}`
             }
         })
-
-    console.log("helper")
-    console.log(response)
 
     if (response.status === 200)
         return response.data;
@@ -86,6 +86,7 @@ export const getEventsByCategory = async ({ category }) => {
         return response.data;
 };
 
+// Petición post para crear producto
 export const createProduct = async ({ name, image, description, price, productCategory, productCompany }) => {
     const formData = new FormData();
     formData.append("name", name);
@@ -103,12 +104,11 @@ export const createProduct = async ({ name, image, description, price, productCa
             }
         });
 
-    console.log(response)
-
     if (response.status === 200)
         return response.data;
 }
 
+// Petición post para actualizar producto
 export const updateProduct = async ({ name, image, category, description, price, company, id }) => {
     const formData = new FormData();
     formData.append("name", name);
@@ -130,6 +130,7 @@ export const updateProduct = async ({ name, image, category, description, price,
     return response.data;
 }
 
+// Petición delete para eliminar producto
 export const deleteProduct = async (id) => {
     const response = await axios.delete(`${BASE_URL}product/delete/${id}`,
         {
@@ -137,8 +138,6 @@ export const deleteProduct = async (id) => {
                 "Authorization": `Bearer ${getToken()}`
             }
         });
-        console.log("helperx")
-        console.log(response)
 
     return response.data;
 }
