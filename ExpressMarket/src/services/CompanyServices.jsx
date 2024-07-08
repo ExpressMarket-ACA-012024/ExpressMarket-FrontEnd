@@ -1,14 +1,13 @@
-import { createTier, deleteTier, fetchAllCompanies, getOneTierById, updateTier } from "../helpers/AdminHelper"
+import { createTier, deleteTier, fetchAllCompanies, getOneCompanyById, updateTier } from "../helpers/AdminHelper"
 
 
 const services = {}
 
-export const allTierServices = {
-    getAllTiers: async (filters = {}) => {
-        const { title = title, size = 10, page = 0 } = filters
+export const allCompanyServices = {
+    getAllCompanies: async () => {
         try {
-            const result = await fetchAllCompanies({ title, size, page })
-            return { items: result.items, totalPages: result.totalPages, totalElements: result.totalElements, isNextPageAvailable: result.isNextPageAvailable, success: true }
+            const result = await fetchAllCompanies()
+            return { items: result, success: true }
         } catch (error) {
             return { items: [], success: false }
         }
@@ -16,7 +15,7 @@ export const allTierServices = {
 
     getOneById: async (id) => {
         try {
-            const result = await getOneTierById({ id })
+            const result = await getOneCompanyById({ id })
             return { items: result, success: true }
         } catch (error) {
             return { items: [], success: false }

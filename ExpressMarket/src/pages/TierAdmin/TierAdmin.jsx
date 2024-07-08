@@ -4,7 +4,7 @@ import TierAdminCard from "../../components/TierAdminCard/TierAdminCard"
 import { Select } from "flowbite-react"
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin"
 import { useEffect, useState } from "react"
-import { allTierServices } from "../../services/TierServices"
+import { allCompanyServices } from "../../services/CompanyServices"
 import { allProductServices } from "../../services/ProductServices"
 import { ToastContainer } from "react-toastify"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -26,7 +26,7 @@ const TierAdmin = () => {
         const fetchTiers = async () => {
             try {
                 const filters = { title: title, size: 10, page: page }
-                let response = await allTierServices.getAllTiers(filters)
+                let response = await allCompanyServices.getAllTiers(filters)
 
                 if (searchedCategory !== '')
                     response = await allCategoryServices.getCategoryByName(searchedCategory)

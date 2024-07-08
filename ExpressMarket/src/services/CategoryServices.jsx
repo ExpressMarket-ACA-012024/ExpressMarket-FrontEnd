@@ -7,8 +7,6 @@ export const allCategoryServices = {
         //const { title = title, size = 10, page = 0 } = filters
         try {
             const result = await fetchAllCategories()
-            console.log("services")
-            console.log(result)
             return { items: result, success: true }
         } catch (error) {
             return { items: [], success: false }

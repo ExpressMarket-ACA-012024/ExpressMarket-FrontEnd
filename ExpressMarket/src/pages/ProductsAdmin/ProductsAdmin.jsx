@@ -9,6 +9,7 @@ import { allProductServices } from "../../services/ProductServices"
 import { allCategoryServices } from "../../services/CategoryServices"
 import { ToastContainer, toast } from "react-toastify"
 import { Select } from "flowbite-react"
+import { allCompanyServices } from "../../services/CompanyServices"
 
 const DEFAULT_IMG = "https://ipmark.com/wp-content/uploads/eventos-de-marketing-2021.jpg"
 
@@ -19,14 +20,16 @@ const ProductsAdmin = () => {
     const [totalPages, setTotalPages] = useState(1)
     const [products, setProducts] = useState([]);
     const [title, setTitle] = useState("");
-    const [searchEvent, setSearchedEvent] = useState('')
+    const [searchEvent, setSearchEvent] = useState('')
     const [categories, setCategories] = useState([])
     const [productCategory, setProductCategory] = useState('')
+    const [companies, setCompanies] = useState([])
+    const [productCompany, setProductCompany] = useState('')
 
     useEffect(() => {
         let fetchProducts = async () => {
             try {
-                const filters = { title: searchEvent, size: 12, page: page }
+                const filters = { name: searchEvent, size: 10, page: page }
                 const response = await allProductServices.getProducts(filters)
 
                 if (!response.success) {
@@ -50,13 +53,26 @@ const ProductsAdmin = () => {
                 }
 
                 setCategories(response.items)
-                console.log("admin")
-                console.log(response)
             } catch (error) {
                 console.error(error);
             }
         };
         fetchCategories();
+
+        let fetchCompanies = async () => {
+            try {
+                let response = await allCompanyServices.getAllCompanies()
+
+                if (!response.success) {
+                    throw new Error('Algo salió mal')
+                }
+
+                setCompanies(response.items)
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchCompanies();
     }, [page]);
 
     const next = () => {
@@ -114,7 +130,7 @@ const ProductsAdmin = () => {
 
             toast("Evento encontrado", { type: 'success' })
             //setProducts(response.data)
-            setSearchedEvent('')
+            setSearchEvent('')
         } catch (error) {
             console.error({ error })
         }
@@ -134,7 +150,7 @@ const ProductsAdmin = () => {
                 setProducts(response.data)
             }
 
-            setSearchedEvent('')
+            setSearchEvent('')
         } catch (error) {
             console.error({ error })
         }
@@ -159,7 +175,7 @@ const ProductsAdmin = () => {
                         <input
                             type="search"
                             id="searchedEvent"
-                            onChange={(e) => onChange(e, setSearchedEvent)}
+                            onChange={(e) => onChange(e, setSearchEvent)}
                             value={searchEvent}
                             className="block w-full p-2.5 pl-10 md:mt-7 text-base text-penn-blue font-medium border border-gray-300 hover:border-pure-indigo rounded-3xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar" required />
                         <button type="submit" className="text-white absolute right-2.5 bottom-1.5 bg-pure-indigo hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
@@ -209,7 +225,7 @@ const ProductsAdmin = () => {
                 <hr className="mt-4 bg-penn-blue h-0.5" />
             </div>
             <div className="grid grid-cols-1 md:w-1/2 m-auto mb-8">
-                <ProductForm categories={categories} />
+                <ProductForm categories={categories} companies={companies} />
             </div>
             <Footer />
         </div>

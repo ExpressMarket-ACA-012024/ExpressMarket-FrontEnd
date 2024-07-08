@@ -7,18 +7,19 @@ import moment from "moment";
 import { allCategoryServices } from "../../services/CategoryServices";
 import { ToastContainer, toast } from "react-toastify";
 import CloudinaryUploadWidget, { IMAGE_URL } from "../CloudinaryUploadWidget/CloudinaryUploadWidget";
+import { allCompanyServices } from "../../services/CompanyServices";
 
 const URLImageRegex = /(https?:\/\/.*\.(?:png|jpg))/i;
 const DEFAULT_IMG = "https://i.pinimg.com/564x/7e/96/cb/7e96cb6920cfc61852ec4b8c119d8b3c.jpg"
 
-const ProductForm = ({ events = [], categories = [] }) => {
+const ProductForm = ({ events = [], categories = [], companies = [] }) => {
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
-    const [category, setCategory] = useState('')
+    //const [category, setCategory] = useState('')
     const [productCategory, setProductCategory] = useState('')
-    const [company, setCompany] = useState('')
+    const [company, setCompany] = useState([])
     const [productCompany, setProductCompany] = useState('')
     const [price, setPrice] = useState(0)
 
@@ -26,35 +27,54 @@ const ProductForm = ({ events = [], categories = [] }) => {
         save(e.target.value);
     }
 
-    async function getCategoryId(name) {
+    /*async function getCategoryId(name) {
         if (typeof (name) === undefined || name !== '') {
-            const categoryResponse = await allCategoryServices.getCategoryByName(name)
+            const categoryResponse = await allCategoryServices.getCategory(name)
+            console.log(categoryResponse)
             setCategory(categoryResponse.data.id)
             setProductCategory(categoryResponse.data.category)
             return categoryResponse.data.id
         } else {
             toast("Seleccione una categoría válida", { type: "warning" })
         }
+    }*/
+
+    /*async function getCompanyId(name) {
+        if (typeof (name) === undefined || name !== '') {
+            const companyResponse = await allCompanyServices.getOneById(name)
+            setCompany(companyResponse.data.id)
+            setProductCompany(companyResponse.data.company)
+            return categoryResponse.data.id
+        } else {
+            toast("Seleccione una categoría válida", { type: "warning" })
+        }
+    }*/
+
+    const onCategoryChange = (e, save) => {
+        //getCategoryId(e.target.value)
+        console.log(e.target.value)
+        save(e.target.value);
     }
 
-    const onIndexChange = (e, save) => {
-        getCategoryId(e.target.value)
+    const onCompanyChange = (e, save) => {
+        //getCompanyId(e.target.value)
+        console.log(e.target.value)
         save(e.target.value);
     }
 
     async function onSubmit(e) {
         e.preventDefault();
-        createEvent()
+        createProduct()
     }
 
-    async function createEvent() {
+    async function createProduct() {
         
         try {
             setImage(IMAGE_URL !== '' ? IMAGE_URL : DEFAULT_IMG)
-            if (name != '' && price != '' && company != '' && category != '' && image != '') {
-                getCategoryId(productCategory)
+            if (name != '' && price != '' && productCompany != '' && productCategory != '' && image != '') {
+                //getCategoryId(productCategory)
                 
-                const response = await allProductServices.createEvent(name, IMAGE_URL, date, hour, place, description, category)
+                const response = await allProductServices.createProduct(name, IMAGE_URL, description, price, productCategory, productCompany)
 
                 if (!response.success) {
                     toast("Algo salió mal!!! Intentelo en otro momento", { type: "error" })
@@ -64,14 +84,13 @@ const ProductForm = ({ events = [], categories = [] }) => {
                 toast('Evento creado correctamente', { type: 'success' })
                 setName('')
                 setImage('')
-                setDate('')
-                setHour('')
-                setPlace('')
+                setPrice('')
                 setDescription('')
                 setProductCategory('')
+                setProductCompany('')
                 window.location.reload()
 
-            } else if (name != '' && price != '' && company != '' && category != '' && image == '') {
+            } else if (name != '' && price != '' && productCompany != '' && productCategory != '' && image == '') {
                 toast("Seleccione una imagen, por favor", { type: "warning" })
             } else {
                 toast("Campos vacíos, favor completar formulario", { type: "warning" })
@@ -108,13 +127,13 @@ const ProductForm = ({ events = [], categories = [] }) => {
                         <div className="mb-4 md:pr-2">
                             <label htmlFor="productCategory" className="block mb-2 text-base text-emerald-800">Categoría</label>
                             <Select id="productCategory"
-                                onChange={(e) => onIndexChange(e, setProductCategory)}
+                                onChange={(e) => onCategoryChange(e, setProductCategory)}
                                 value={productCategory}
                                 className="w-full mb-4 border border-emerald-600 rounded-lg shadow-md text-emerald-800 font-medium bg-white hover:border-violet-700 focus:ring-dark-violet focus:border-emerald-600">
                                 <option > </option>
                                 {categories.map((category) => {
                                     return (
-                                        <option key={category.id}> {category.category} </option>
+                                        <option key={category.id} value={category.id}> {category.category} </option>
                                     )
                                 })}
                             </Select>
@@ -129,13 +148,13 @@ const ProductForm = ({ events = [], categories = [] }) => {
                     <div className="mb-4 md:pr-2">
                             <label htmlFor="productCompany" className="block mb-2 text-base text-emerald-800">Marca del producto</label>
                             <Select id="productCompany"
-                                onChange={(e) => onIndexChange(e, setProductCategory)}
+                                onChange={(e) => onCompanyChange(e, setProductCompany)}
                                 value={productCompany}
                                 className="w-full mb-4 border border-emerald-600 rounded-lg shadow-md text-emerald-800 font-medium bg-white hover:border-violet-700 focus:ring-dark-violet focus:border-emerald-600">
                                 <option > </option>
-                                {categories.map((category) => {
+                                {companies.map((company) => {
                                     return (
-                                        <option key={category.id}> {category.category} </option>
+                                        <option key={company.id} value={company.id}> {company.company} </option>
                                     )
                                 })}
                             </Select>

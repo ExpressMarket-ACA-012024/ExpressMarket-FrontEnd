@@ -11,16 +11,32 @@ export const fetchAllProducts = async ({ title, size, page }) => {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
             },
-            /*params: {
+            params: {
                 name: title,
-                size: size,
-                page: page
-            }*/
+                page: page,
+                size: size
+            }
         });
 
     if (response.status === 200)
         return response.data 
 };
+/*export const fetchAllProducts = async ({ title, size, page }) => {
+    const response = await axios.get(`${BASE_URL}product/get/all`,
+        {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`
+            },
+            params: {
+                name: title,
+                page: page,
+                size: size
+            }
+        });
+
+    if (response.status === 200)
+        return response.data 
+};*/
 
 export const getOneEventById = async ({ id }) => {
     const response = await axios.get(`${BASE_URL}events/${id}`,
@@ -67,23 +83,24 @@ export const getEventsByCategory = async ({ category }) => {
         return response.data;
 };
 
-export const createEvent = async ({ title, image, date, hour, place, address, category }) => {
+export const createProduct = async ({ name, image, description, price, productCategory, productCompany }) => {
     const formData = new FormData();
-    formData.append("title", title);
+    formData.append("name", name);
     formData.append("image", image);
-    formData.append("date", date);
-    formData.append("hour", hour);
-    formData.append("place", place);
-    formData.append("address", address);
-    formData.append("category", category);
+    formData.append("category", productCategory);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("company", productCompany);
 
-    const response = await axios.post(`${BASE_URL}events/save`, formData,
+    const response = await axios.post(`${BASE_URL}product/save`, formData,
         {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": `Bearer ${getToken()}`
             }
         });
+
+    console.log(response)
 
     if (response.status === 200)
         return response.data;
@@ -131,14 +148,12 @@ export const fetchAllCategories = async () => {
         });
 
     //const postResponse = await response.data;
-    console.log("helper")
-    console.log(response)
     if(response.status === 200)
         return response.data
 };
 
 export const getOneCategory = async ({ id }) => {
-    const response = await axios.get(`${BASE_URL}categories/${id}`,
+    const response = await axios.get(`${BASE_URL}category/get/${id}`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
@@ -222,26 +237,21 @@ export const getAllUserRoles = async () => {
     return { items: postResponse }
 }
 
-// Tier
-export const fetchAllTiers = async ({ tier, size, page }) => {
-    const response = await axios.get(`${BASE_URL}tiers/`,
+// Company
+export const fetchAllCompanies = async () => {
+    const response = await axios.get(`${BASE_URL}company/get/all`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
-            },
-            params: {
-                size: size,
-                page: page
             }
         });
-
-    const postResponse = await response.data;
-
-    return { items: postResponse, totalPages: postResponse.totalPages, totalElements: postResponse.totalElements, isNextPageAvailable: page + 1 < postResponse.totalPages }
+    
+    if (response.status === 200)
+        return response.data
 }
 
-export const getOneTierById = async ({ id }) => {
-    const response = await axios.get(`${BASE_URL}tiers/${id}`,
+export const getOneCompanyById = async ({ id }) => {
+    const response = await axios.get(`${BASE_URL}company/get/${id}`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
