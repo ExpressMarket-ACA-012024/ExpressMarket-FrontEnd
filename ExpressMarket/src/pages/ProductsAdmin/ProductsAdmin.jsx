@@ -1,11 +1,11 @@
 import Footer from "../../components/Footer/Footer"
 import ProductsAdminCard from "../../components/ProductsAdminCard/ProductsAdminCard"
-import EventsForm from "../../components/EventsForm/EventsForm"
+import ProductForm from "../../components/ProductForm/ProductForm"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin"
 import { useEffect, useState } from "react"
-import { allEventServices } from "../../services/EventServices"
+import { allProductServices } from "../../services/ProductServices"
 import { allCategoryServices } from "../../services/CategoryServices"
 import { ToastContainer, toast } from "react-toastify"
 import { Select } from "flowbite-react"
@@ -18,17 +18,16 @@ const ProductsAdmin = () => {
     const [isNextPageAvailable, setIsNextPageAvailable] = useState(true);
     const [totalPages, setTotalPages] = useState(1)
     const [products, setProducts] = useState([]);
-    const [categories, setCategories] = useState([]);
     const [title, setTitle] = useState("");
     const [searchEvent, setSearchedEvent] = useState('')
-    const [category, setCategory] = useState('')
-    const [eventCategory, setEventCategory] = useState('')
+    const [categories, setCategories] = useState([])
+    const [productCategory, setProductCategory] = useState('')
 
     useEffect(() => {
         let fetchProducts = async () => {
             try {
                 const filters = { title: searchEvent, size: 12, page: page }
-                const response = await allEventServices.getProducts(filters)
+                const response = await allProductServices.getProducts(filters)
 
                 if (!response.success) {
                     throw new Error('Algo salió mal')
@@ -41,23 +40,23 @@ const ProductsAdmin = () => {
         };
         fetchProducts();
 
-        /*let fetchCategories = async () => {
+        let fetchCategories = async () => {
             try {
                 const filters = { title: title, size: 10, page: page }
                 let response = await allCategoryServices.getAllCategories(filters)
-
-                setIsNextPageAvailable(response.isNextPageAvailable)
 
                 if (!response.success) {
                     throw new Error('Algo salió mal')
                 }
 
                 setCategories(response.items)
+                console.log("admin")
+                console.log(response)
             } catch (error) {
                 console.error(error);
             }
         };
-        fetchCategories();*/
+        fetchCategories();
     }, [page]);
 
     const next = () => {
@@ -97,7 +96,7 @@ const ProductsAdmin = () => {
         if (typeof (name) === undefined || name !== '') {
             const categoryResponse = await allCategoryServices.getCategoryByName(name)
             setCategory(categoryResponse.data.id)
-            setEventCategory(categoryResponse.data.category)
+            setProductCategory(categoryResponse.data.category)
             return categoryResponse.data.id
         } else {
             toast("Seleccione una categoría válida", { type: "warning" })
@@ -106,7 +105,7 @@ const ProductsAdmin = () => {
 
     async function searchEventByTitle() {
         try {
-            const response = await allEventServices.getEventByTitle(searchEvent)
+            const response = await allProductServices.getEventByTitle(searchEvent)
 
             if (!response.success) {
                 toast("No se encontró el evento.", { type: 'warning' })
@@ -123,7 +122,7 @@ const ProductsAdmin = () => {
 
     async function searchEventsByCategory() {
         try {
-            const response = await allEventServices.getEventsByCategory(category)
+            const response = await allProductServices.getEventsByCategory(category)
 
             if (!response.success) {
                 toast("No se encontró el evento.", { type: 'error' })
@@ -169,9 +168,9 @@ const ProductsAdmin = () => {
                 <form action="" onSubmit={onFilter}>
                     <div className="relative w-72 md:w-1/2">
                         <p className='mb-2 font-medium text-dark-violet'>Filtrar por categoría: </p>
-                        <Select id="eventCategory"
-                            onChange={(e) => onIndexChange(e, setEventCategory)}
-                            value={eventCategory}
+                        <Select id="productCategory"
+                            onChange={(e) => onIndexChange(e, setProductCategory)}
+                            value={productCategory}
                             className="relative md:w-72 mb-4 border border-dark-violet rounded-lg shadow-md text-dark-violet font-medium bg-white hover:border-violet-700 focus:ring-dark-violet focus:border-dark-violet">
                             <option > </option>
                             {categories.map((category) => {
@@ -210,7 +209,7 @@ const ProductsAdmin = () => {
                 <hr className="mt-4 bg-penn-blue h-0.5" />
             </div>
             <div className="grid grid-cols-1 md:w-1/2 m-auto mb-8">
-                <EventsForm categories={categories} />
+                <ProductForm categories={categories} />
             </div>
             <Footer />
         </div>

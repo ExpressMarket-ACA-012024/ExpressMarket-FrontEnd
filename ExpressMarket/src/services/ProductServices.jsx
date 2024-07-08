@@ -3,13 +3,11 @@ import { fetchAllProducts, createEvent, updateEvent, changeEventStatus, getOneEv
 
 const services = {};
 
-export const allEventServices = {
+export const allProductServices = {
     getProducts: async (title, size, page) => {
         try {
             const result = await fetchAllProducts( title, size, page )
             //return { items: result.items, totalPages: result.totalPages, totalElements: result.totalElements, isNextPageAvailable: result.isNextPageAvailable, success: true }
-            console.log("services")
-            console.log(result)
             return { items: result, success: true }
         } catch (error) {
             return { items: [], success: false }

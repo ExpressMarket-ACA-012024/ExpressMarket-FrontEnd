@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SaveButton from "../SaveButton/SaveButton"
 import { Select } from "flowbite-react";
-import { allEventServices } from "../../services/EventServices";
+import { allProductServices } from "../../services/ProductServices";
 import { allInvolvedServices } from "../../services/InvolvedServices";
 import { toast } from "react-toastify";
 
@@ -18,7 +18,7 @@ const OrganizersForm = ({ events = [] }) => {
 
     async function getEventId(name) {
         if (typeof (name) === undefined || name !== '') {
-            const response = await allEventServices.getEventByTitle(name)
+            const response = await allProductServices.getEventByTitle(name)
             console.log(response)
             setEventId(response.data[0].id)
             setEvent(response.data[0].title)

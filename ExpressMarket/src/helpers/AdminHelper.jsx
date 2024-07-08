@@ -17,7 +17,7 @@ export const fetchAllProducts = async ({ title, size, page }) => {
                 page: page
             }*/
         });
-        
+
     if (response.status === 200)
         return response.data 
 };
@@ -130,9 +130,11 @@ export const fetchAllCategories = async () => {
             },
         });
 
-    const postResponse = await response.data;
-
-    return { items: postResponse }
+    //const postResponse = await response.data;
+    console.log("helper")
+    console.log(response)
+    if(response.status === 200)
+        return response.data
 };
 
 export const getOneCategory = async ({ id }) => {

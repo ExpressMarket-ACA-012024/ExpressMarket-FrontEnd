@@ -1,4 +1,4 @@
-import { allEventServices } from "../../services/EventServices";
+import { allProductServices } from "../../services/ProductServices";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import CloudinaryUploadWidget, {
@@ -28,7 +28,7 @@ const ProductsAdminCard = ({ products = [] }) => {
 
   async function changeEventStatus(title) {
     try {
-      const response = await allEventServices.changeStatus(title);
+      const response = await allProductServices.changeStatus(title);
       if (!response.success) {
         toast("Algo salió mal.", { type: "error" });
         throw new Error("Something was wrong");
@@ -43,7 +43,7 @@ const ProductsAdminCard = ({ products = [] }) => {
 
   async function getEventById(id) {
     try {
-      const response = await allEventServices.getEventById(id);
+      const response = await allProductServices.getEventById(id);
       if (!response.success) {
         toast("Algo salió mal", { type: "error" });
         throw new Error("Something was wrong");
@@ -204,7 +204,7 @@ function EditEventModal({ product, categories, onClose }) {
             setNewImage(image);
             newImg = image;
           }
-          const response = await allEventServices.updateEvent(
+          const response = await allProductServices.updateEvent(
             product.id,
             title,
             newImg,
@@ -244,7 +244,7 @@ function EditEventModal({ product, categories, onClose }) {
             setNewImage(image);
             newImg = image;
           }
-          const response = await allEventServices.updateEvent(
+          const response = await allProductServices.updateEvent(
             product.id,
             title,
             newImg,
