@@ -130,13 +130,15 @@ export const updateProduct = async ({ name, image, category, description, price,
     return response.data;
 }
 
-export const changeEventStatus = async (id) => {
-    const response = await axios.post(`${BASE_URL}events/switch/${id}`, null,
+export const deleteProduct = async (id) => {
+    const response = await axios.delete(`${BASE_URL}product/delete/${id}`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
             }
         });
+        console.log("helperx")
+        console.log(response)
 
     return response.data;
 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { fetchAllProducts, createProduct, updateProduct, changeEventStatus, getProductById, getOneEventByTitle, getEventsByCategory } from "../helpers/AdminHelper";
+import { fetchAllProducts, createProduct, updateProduct, deleteProduct, getProductById, getOneEventByTitle, getEventsByCategory } from "../helpers/AdminHelper";
 
 const services = {};
 
@@ -71,9 +71,9 @@ export const allProductServices = {
         }
     },
 
-    changeStatus: async (id) => {
+    deleteProduct: async (id) => {
         try {
-            const result = await changeEventStatus(id);
+            const result = await deleteProduct(id);
             return { data: result, success: true };
 
         } catch (error) {

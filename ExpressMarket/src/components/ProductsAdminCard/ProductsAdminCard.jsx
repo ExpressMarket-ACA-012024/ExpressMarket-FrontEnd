@@ -11,7 +11,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import moment from "moment-timezone";
 import SaveButton from "../SaveButton/SaveButton";
@@ -26,15 +26,15 @@ const ProductsAdminCard = ({ products = [], categories = [], companies = [] }) =
   const [eventToEdit, setEventToEdit] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  async function changeEventStatus(title) {
+  async function deleteProduct(id) {
     try {
-      const response = await allProductServices.changeStatus(title);
+      const response = await allProductServices.deleteProduct(id);
       if (!response.success) {
         toast("Algo salió mal.", { type: "error" });
         throw new Error("Something was wrong");
       }
 
-      toast("Estado cambiado", { type: "success" });
+      toast("Producto eliminado", { type: "success" });
       window.location.reload();
     } catch (error) {
       console.error(error);
@@ -96,21 +96,13 @@ const ProductsAdminCard = ({ products = [], categories = [], companies = [] }) =
                     </span>
                   </button>
                   <button
-                    onClick={() => changeEventStatus(product.id)}
+                    onClick={() => deleteProduct(product.id)}
                     className="rounded-lg bg-orange-600 hover:bg-orange-500 w-12 h-12 max-h-fit p-2 text-white md:text-sm my-auto font-montserrat"
                     type="submit"
                   >
-                    {product.status ? (
-                      <span>
-                        {" "}
-                        <VisibilityOffIcon />{" "}
-                      </span>
-                    ) : (
-                      <span>
-                        {" "}
-                        <VisibilityIcon />{" "}
-                      </span>
-                    )}
+                    <span>
+                      <DeleteIcon />
+                    </span>
                   </button>
                 </div>
               </div>
