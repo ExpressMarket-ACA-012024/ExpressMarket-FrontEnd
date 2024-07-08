@@ -4,10 +4,10 @@ const services = {};
 
 export const allCategoryServices = {
     getAllCategories: async (filters = {}) => {
-        const { title = title, size = 10, page = 0 } = filters
+        //const { title = title, size = 10, page = 0 } = filters
         try {
-            const result = await fetchAllCategories({ title, size, page })
-            return { items: result.items, isNextPageAvailable: result.isNextPageAvailable, success: true }
+            const result = await fetchAllCategories()
+            return { items: result, success: true }
         } catch (error) {
             return { items: [], success: false }
         }

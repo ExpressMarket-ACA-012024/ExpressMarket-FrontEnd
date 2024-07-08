@@ -1,5 +1,5 @@
 import axios from "axios"
-export const BASE_URL = "https://ticketify-api-b541b0197339.herokuapp.com/";
+export const BASE_URL = "http://localhost:8080/";
 import { getToken, getId } from '../context/AppContext'
 
 export const fetchUser = async () => {

@@ -7,7 +7,7 @@ import SearchBar from "../../components/SearchBar/SearchBar"
 import { allInvolvedServices } from "../../services/InvolvedServices"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import { allEventServices } from "../../services/EventServices"
+import { allProductServices } from "../../services/ProductServices"
 import { ToastContainer } from "react-toastify"
 
 
@@ -41,7 +41,7 @@ const OrganizerAdmin = () => {
         let fetchEvents = async () => {
             try {
                 const filters = { title: '', size: 1000, page: page }
-                const response = await allEventServices.getEvents(filters)
+                const response = await allProductServices.getEvents(filters)
 
                 setIsNextPageAvailable(response.isNextPageAvailable)
 
@@ -78,7 +78,7 @@ const OrganizerAdmin = () => {
 
     async function searchOrganizerById() {
         try {
-            const response = await allEventServices.getEventByTitle(searchEvent)
+            const response = await allProductServices.getEventByTitle(searchEvent)
 
             if (!response.success) {
                 toast("No se encontró el evento.", { type: 'warning' })

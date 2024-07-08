@@ -44,8 +44,8 @@ class CloudinaryUploadWidget extends Component {
 
     render() {
         return (
-            <button id="upload_widget" className="cloudinary-button- bg-penn-blue px-6 py-2 rounded-lg text-white hover:bg-blue-800">
-                <span><AddPhotoAlternateIcon className='mr-2 align-text-top' fontSize='small' /> Subir foto </span>
+            <button id="upload_widget" className="cloudinary-button- bg-emerald-900 px-6 py-2.5 rounded-lg text-white hover:bg-emerald-500">
+                <span><AddPhotoAlternateIcon className='mr-2 align-text-top' fontSize='small' /> Subir imagen </span>
             </button>
         );
     }
