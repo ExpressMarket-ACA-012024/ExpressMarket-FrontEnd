@@ -3,11 +3,14 @@ import Sidebar from "../Sidebar/Sidebar";
 import logo from "../../assets/img/ExpressMarketLogo.png";
 import { FaUser, FaShoppingCart, FaBars, FaSearch, FaBoxOpen } from "react-icons/fa";
 import { useAppContext, getToken } from '../../context/AppContext';
+import { getUser } from '../../services/UserService'
+
 
 const Navbar = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isCartVisible, setIsCartVisible] = useState(false);
   const cartRef = useRef(null);
+  const [store, setStore] = useState("ExpressMarket")
 
   const toggleSidebar = () => {
     setIsVisible(!isVisible);
@@ -17,12 +20,37 @@ const Navbar = () => {
     setIsCartVisible(!isCartVisible);
   };
 
+  const fetchUser = async () => {
+    try {
+        let response = await getUser()
+
+        if (!response.success) {
+            toast("Algo salió mal.", { type: 'error' })
+            throw new Error('Algo salió mal')
+        }
+        //console.log(response)
+
+        if (response=='') {
+          setStore(response.user.store.description)
+        }else{
+          setStore(response.user.store.description)
+        }
+
+        console.log(store);
+        
+    } catch (error) {
+        console.error(error);
+    }
+  }
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (cartRef.current && !cartRef.current.contains(event.target)) {
         setIsCartVisible(false);
       }
     };
+
+    fetchUser();
 
     document.addEventListener("mousedown", handleClickOutside);
 
@@ -47,7 +75,7 @@ const Navbar = () => {
           </button>
           <a href="/" className="flex items-center ml-4">
             <img src={logo} className="w-8 h-8 mr-2" alt="logo" />
-            <span className="text-xl font-bold text-white">ExpressMarket</span>
+            <span className="text-xl font-bold text-white">{store}</span>
           </a>
         </div>
         <div className="relative flex-grow mx-4 my-auto">

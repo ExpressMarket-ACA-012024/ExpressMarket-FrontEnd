@@ -37,7 +37,7 @@ function Login() {
   }
 
   if (getToken() && getRoleNames()?.includes("User")) {
-    window.location.href = './';
+    window.location.href = './mapa';
   } else if (getToken() && getRoleNames()?.includes("Admin")) {
     window.location.href = './products-admin';
   }
