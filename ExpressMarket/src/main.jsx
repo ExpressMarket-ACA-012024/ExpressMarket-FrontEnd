@@ -4,6 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Login from './pages/Login/Login'
+import Mapa from './pages/Mapa/Mapa'
 import Home from './pages/Home/Home'
 import TermsAndConditions from './pages/TermsAndConditions/TermsAndConditions'
 import FAQ from './pages/FAQ/FAQ'
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login/>,
+  },
+  {
+    path: "/mapa",
+    element: <Mapa/>,
   },
   {
     path: "/savepasswordreset/:email/",
