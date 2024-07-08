@@ -4,6 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Login from './pages/Login/Login'
+import Mapa from './pages/Mapa/Mapa'
 import Home from './pages/Home/Home'
 import TermsAndConditions from './pages/TermsAndConditions/TermsAndConditions'
 import FAQ from './pages/FAQ/FAQ'
@@ -13,12 +14,12 @@ import ContactUs from './pages/ContactUs/ContactUs'
 import PreOrder from './pages/PreOrder/PreOrder'
 import CartOrder from './pages/CartOrder/CartOrder'
 import Payment from './pages/Payment/Payment'
-import Events from './pages/Events/Events'
+import Products from './pages/Product/Products'
 import MyTickets from './pages/MyTickets/Mytickets'
 import Scanner from './pages/ScannerView/ScannerView'
 import Profile from './pages/Profile/Profile'
 import QrTicket from './pages/QrTickets/QrTicket'
-import EventAdmin from './pages/EventAdmin/EventAdmin'
+import ProductsAdmin from './pages/ProductsAdmin/ProductsAdmin'
 import TierAdmin from './pages/TierAdmin/TierAdmin'
 import Error404 from './pages/Error404/Error404'
 import UserAdmin from './pages/UserAdmin/UserAdmin';
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login/>,
+  },
+  {
+    path: "/mapa",
+    element: <Mapa/>,
   },
   {
     path: "/savepasswordreset/:email/",
@@ -83,8 +88,8 @@ const router = createBrowserRouter([
     element: <Payment/>,
   },
   {
-    path: "/events",
-    element:<PrivateRoute role={["Admin"]} children={<Events/>} />,
+    path: "/products",
+    element:<Products/>,
   },
   {
     path: "/mytickets",
@@ -103,8 +108,8 @@ const router = createBrowserRouter([
     element: <QrTicket/>,
   },
   {
-    path: "/event-admin",
-    element: <EventAdmin /> ,
+    path: "/products-admin",
+    element: <ProductsAdmin /> ,
   },
   {
     path: "/tiers",

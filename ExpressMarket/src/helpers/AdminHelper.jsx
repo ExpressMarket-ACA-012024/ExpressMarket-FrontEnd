@@ -1,29 +1,48 @@
 import axios from "axios";
 import { getToken, getId } from '../context/AppContext'
-export const BASE_URL = "https://ticketify-api-b541b0197339.herokuapp.com/";
+export const BASE_URL = "http://localhost:8080/";
 export const CLOUD_NAME = 'duxqteogb'
 export const UPLOAD_PRESET = 'jw3jwwpb'
 
-// Event
-export const fetchAllEvents = async ({ title, size, page }) => {
-    const response = await axios.get(`${BASE_URL}events/all${title}`,
+// Product
+// Petición get todos los productos
+export const fetchAllProducts = async ({ title, size, page }) => {
+    const response = await axios.get(`${BASE_URL}product/get/all`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
             },
             params: {
-                size: size,
-                page: page
+                name: title,
+                page: page,
+                size: size
             }
         });
 
-    const postResponse = await response.data;
-
-    return { items: postResponse.content, totalPages: postResponse.totalPages, totalElements: postResponse.totalElements, isNextPageAvailable: page + 1 < postResponse.totalPages }
+    if (response.status === 200)
+        return response.data 
 };
 
-export const getOneEventById = async ({ id }) => {
-    const response = await axios.get(`${BASE_URL}events/${id}`,
+/*export const fetchAllProducts = async ({ title, size, page }) => {
+    const response = await axios.get(`${BASE_URL}product/get/all`,
+        {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`
+            },
+            params: {
+                name: title,
+                page: page,
+                size: size
+            }
+        });
+
+    if (response.status === 200)
+        return response.data 
+};*/
+
+// Petición get producto por id
+export const getProductById = async ({ id }) => {
+    const response = await axios.get(`${BASE_URL}product/get/one/${id}`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
@@ -31,7 +50,7 @@ export const getOneEventById = async ({ id }) => {
         })
 
     if (response.status === 200)
-        return response.data.event;
+        return response.data;
 };
 
 export const getOneEventByTitle = async ({ event }) => {
@@ -67,17 +86,17 @@ export const getEventsByCategory = async ({ category }) => {
         return response.data;
 };
 
-export const createEvent = async ({ title, image, date, hour, place, address, category }) => {
+// Petición post para crear producto
+export const createProduct = async ({ name, image, description, price, productCategory, productCompany }) => {
     const formData = new FormData();
-    formData.append("title", title);
+    formData.append("name", name);
     formData.append("image", image);
-    formData.append("date", date);
-    formData.append("hour", hour);
-    formData.append("place", place);
-    formData.append("address", address);
-    formData.append("category", category);
+    formData.append("category", productCategory);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("company", productCompany);
 
-    const response = await axios.post(`${BASE_URL}events/save`, formData,
+    const response = await axios.post(`${BASE_URL}product/save`, formData,
         {
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -89,17 +108,18 @@ export const createEvent = async ({ title, image, date, hour, place, address, ca
         return response.data;
 }
 
-export const updateEvent = async ({ id, title, image, date, hour, place, address, category }) => {
+// Petición post para actualizar producto
+export const updateProduct = async ({ name, image, category, description, price, company, id }) => {
     const formData = new FormData();
-    formData.append("newTitle", title);
+    formData.append("name", name);
     formData.append("image", image);
-    formData.append("date", date);
-    formData.append("hour", hour);
-    formData.append("place", place);
-    formData.append("address", address);
     formData.append("category", category);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("company", company);
+    formData.append("product", id);
 
-    const response = await axios.post(`${BASE_URL}events/update/${id}`, formData,
+    const response = await axios.post(`${BASE_URL}product/edit`, formData,
         {
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -110,8 +130,9 @@ export const updateEvent = async ({ id, title, image, date, hour, place, address
     return response.data;
 }
 
-export const changeEventStatus = async (id) => {
-    const response = await axios.post(`${BASE_URL}events/switch/${id}`, null,
+// Petición delete para eliminar producto
+export const deleteProduct = async (id) => {
+    const response = await axios.delete(`${BASE_URL}product/delete/${id}`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
@@ -122,25 +143,21 @@ export const changeEventStatus = async (id) => {
 }
 
 // Category
-export const fetchAllCategories = async ({ size, page }) => {
-    const response = await axios.get(`${BASE_URL}categories/`,
+export const fetchAllCategories = async () => {
+    const response = await axios.get(`${BASE_URL}category/get/all`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
             },
-            params: {
-                size: size,
-                page: page
-            }
         });
 
-    const postResponse = await response.data;
-
-    return { items: postResponse, isNextPageAvailable: page + 1 < postResponse.pages }
+    //const postResponse = await response.data;
+    if(response.status === 200)
+        return response.data
 };
 
 export const getOneCategory = async ({ id }) => {
-    const response = await axios.get(`${BASE_URL}categories/${id}`,
+    const response = await axios.get(`${BASE_URL}category/get/${id}`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
@@ -224,26 +241,21 @@ export const getAllUserRoles = async () => {
     return { items: postResponse }
 }
 
-// Tier
-export const fetchAllTiers = async ({ tier, size, page }) => {
-    const response = await axios.get(`${BASE_URL}tiers/`,
+// Company
+export const fetchAllCompanies = async () => {
+    const response = await axios.get(`${BASE_URL}company/get/all`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
-            },
-            params: {
-                size: size,
-                page: page
             }
         });
-
-    const postResponse = await response.data;
-
-    return { items: postResponse, totalPages: postResponse.totalPages, totalElements: postResponse.totalElements, isNextPageAvailable: page + 1 < postResponse.totalPages }
+    
+    if (response.status === 200)
+        return response.data
 }
 
-export const getOneTierById = async ({ id }) => {
-    const response = await axios.get(`${BASE_URL}tiers/${id}`,
+export const getOneCompanyById = async ({ id }) => {
+    const response = await axios.get(`${BASE_URL}company/get/${id}`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`

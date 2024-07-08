@@ -1,5 +1,5 @@
 import { deleteTier, updateTier } from "../../helpers/AdminHelper";
-import { allTierServices } from "../../services/TierServices";
+import { allCompanyServices } from "../../services/CompanyServices";
 import { toast } from "react-toastify";
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -33,7 +33,7 @@ const TierAdminCard = ({ tiers = [] }) => {
 
     async function getTierById(id) {
         try {
-            const response = await allTierServices.getOneById(id)
+            const response = await allCompanyServices.getOneById(id)
             
             if (!response.success) {
                 toast("Algo salió mal", { type: 'error' })
@@ -50,7 +50,7 @@ const TierAdminCard = ({ tiers = [] }) => {
 
     async function deleteTier(id) {
         try {
-            const response = await allTierServices.deleteTier(id);
+            const response = await allCompanyServices.deleteTier(id);
             if (!response.success) {
                 toast("Algo salió mal.", { type: 'error' })
                 throw new Error('Something was wrong')
@@ -115,7 +115,7 @@ function EditTierModal({ tier, onClose }) {
     async function updateTier() {
         try {
             if (name != '' && price != '' && capacity != '') {
-                const response = await allTierServices.updateTier(tier.id, name, capacity, price)
+                const response = await allCompanyServices.updateTier(tier.id, name, capacity, price)
 
                 if (!response.success) {
                     toast("Algo salió mal!!! Intentelo en otro momento", { type: "error" })

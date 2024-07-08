@@ -1,15 +1,14 @@
-import React from 'react';
-import Footer from "../../components/Footer/Footer"
-import Navbar from "../../components/Navbar/Navbar"
-import EventsCards from '../../components/CardsEvent/CardsEvents'
-import { getEvents } from '../../services/UserService'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Footer from "../../components/Footer/Footer";
+import Navbar from "../../components/Navbar/Navbar";
+import ProductCard from '../../components/CardsProduct/ProductCard';
+import { getEvents } from '../../services/UserService';
 
-function Events() {
+function Products() {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {   
-        if (events.length == 0) {
+        if (events.length === 0) {
             async function fetchAllEvents() {
                 let response = await getEvents();
                 if (response.success) {
@@ -18,15 +17,15 @@ function Events() {
             }
             fetchAllEvents();
         }
-    }), [setEvents];
+    }, [events]);
 
     return (
         <div className='bg-light-gray font-montserrat'>
             <Navbar />
-            <EventsCards events={events}/>
+            <ProductCard />
             <Footer />
         </div>
-    )
+    );
 }
 
-export default Events
+export default Products;
