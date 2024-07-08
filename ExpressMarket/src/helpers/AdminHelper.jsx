@@ -38,16 +38,19 @@ export const fetchAllProducts = async ({ title, size, page }) => {
         return response.data 
 };*/
 
-export const getOneEventById = async ({ id }) => {
-    const response = await axios.get(`${BASE_URL}events/${id}`,
+export const getProductById = async ({ id }) => {
+    const response = await axios.get(`${BASE_URL}product/get/one/${id}`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
             }
         })
 
+    console.log("helper")
+    console.log(response)
+
     if (response.status === 200)
-        return response.data.event;
+        return response.data;
 };
 
 export const getOneEventByTitle = async ({ event }) => {
@@ -106,17 +109,17 @@ export const createProduct = async ({ name, image, description, price, productCa
         return response.data;
 }
 
-export const updateEvent = async ({ id, title, image, date, hour, place, address, category }) => {
+export const updateProduct = async ({ name, image, category, description, price, company, id }) => {
     const formData = new FormData();
-    formData.append("newTitle", title);
+    formData.append("name", name);
     formData.append("image", image);
-    formData.append("date", date);
-    formData.append("hour", hour);
-    formData.append("place", place);
-    formData.append("address", address);
     formData.append("category", category);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("company", company);
+    formData.append("product", id);
 
-    const response = await axios.post(`${BASE_URL}events/update/${id}`, formData,
+    const response = await axios.post(`${BASE_URL}product/edit`, formData,
         {
             headers: {
                 "Content-Type": "multipart/form-data",

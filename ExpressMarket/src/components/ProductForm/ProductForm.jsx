@@ -51,13 +51,11 @@ const ProductForm = ({ events = [], categories = [], companies = [] }) => {
     }*/
 
     const onCategoryChange = (e, save) => {
-        //getCategoryId(e.target.value)
         console.log(e.target.value)
         save(e.target.value);
     }
 
     const onCompanyChange = (e, save) => {
-        //getCompanyId(e.target.value)
         console.log(e.target.value)
         save(e.target.value);
     }
@@ -117,7 +115,7 @@ const ProductForm = ({ events = [], categories = [], companies = [] }) => {
             />
             <form action="post" className="font-montserrat font-semibold" onSubmit={onSubmit}>
                 <div className="p-4">
-                    <label htmlFor="eventName" className="block mb-2 text-base text-emerald-800">Producto</label>
+                    <label htmlFor="name" className="block mb-2 text-base text-emerald-800">Producto</label>
                     <input type="text" id="name" onChange={(e) => onChange(e, setName)} value={name} autoComplete="off" placeholder="Nombre del producto" className="block w-full mb-4 p-2 text-emerald-800 border border-emerald-600 hover:border-violet-700 rounded-lg shadow-md text-base focus:ring-blue-500 focus:border-blue-500" />
                     
                     <label htmlFor="description" className="block mb-2 text-base text-emerald-800">Descripción del producto</label>
@@ -165,9 +163,6 @@ const ProductForm = ({ events = [], categories = [], companies = [] }) => {
                             <CloudinaryUploadWidget />
                         </div>
                     </div>
-
-                    
-
                     <div className="flex justify-end mt-4">
                         <SaveButton />
                     </div>

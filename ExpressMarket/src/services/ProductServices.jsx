@@ -1,5 +1,5 @@
 import axios from "axios";
-import { fetchAllProducts, createProduct, updateEvent, changeEventStatus, getOneEventById, getOneEventByTitle, getEventsByCategory } from "../helpers/AdminHelper";
+import { fetchAllProducts, createProduct, updateProduct, changeEventStatus, getProductById, getOneEventByTitle, getEventsByCategory } from "../helpers/AdminHelper";
 
 const services = {};
 
@@ -14,9 +14,11 @@ export const allProductServices = {
         }
     },
 
-    getEventById: async (id) => {
+    getProductById: async (id) => {
         try {
-            const result = await getOneEventById({ id });
+            const result = await getProductById({ id });
+            console.log("service")
+            console.log(result)
             return { data: result, success: true };
 
         } catch (error) {
@@ -58,9 +60,9 @@ export const allProductServices = {
         }
     },
 
-    updateEvent: async ( id, title, image, date, hour, place, address, category ) => {
+    updateProduct: async ( name, image, category, description, price, company, id ) => {
         try {
-            const result = await updateEvent({ id, title, image, date, hour, place, address, category });
+            const result = await updateProduct({ name, image, category, description, price, company, id });
             return { data: result, success: true };
 
         } catch (error) {

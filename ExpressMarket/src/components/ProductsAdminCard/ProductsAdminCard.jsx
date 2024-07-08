@@ -20,7 +20,7 @@ const URLImageRegex = /(https?:\/\/.*\.(?:png|jpg))/i;
 const DEFAULT_IMG =
   "https://i.pinimg.com/564x/7e/96/cb/7e96cb6920cfc61852ec4b8c119d8b3c.jpg";
 
-const ProductsAdminCard = ({ products = [] }) => {
+const ProductsAdminCard = ({ products = [], categories = [], companies = [] }) => {
   moment.locale();
 
   const [eventToEdit, setEventToEdit] = useState({});
@@ -41,9 +41,11 @@ const ProductsAdminCard = ({ products = [] }) => {
     }
   }
 
-  async function getEventById(id) {
+  async function getProductById(id) {
     try {
-      const response = await allProductServices.getEventById(id);
+      const response = await allProductServices.getProductById(id);
+      console.log("get product")
+      console.log(response)
       if (!response.success) {
         toast("Algo salió mal", { type: "error" });
         throw new Error("Something was wrong");
@@ -85,7 +87,7 @@ const ProductsAdminCard = ({ products = [] }) => {
                 </p>
                 <div className="space-x-2 text-right w-full">
                   <button
-                    onClick={() => getEventById(product.id)}
+                    onClick={() => getProductById(product.id)}
                     type="submit"
                     className="rounded-lg left-2 bg-golden-yellow hover:bg-yellow-400 w-12 h-12 max-h-fit p-2 text-white md:text-sm my-auto font-montserrat"
                   >
@@ -120,6 +122,7 @@ const ProductsAdminCard = ({ products = [] }) => {
         <EditEventModal
           product={eventToEdit}
           categories={categories}
+          companies={companies}
           onClose={onClose}
         />
       )}
@@ -127,30 +130,19 @@ const ProductsAdminCard = ({ products = [] }) => {
   );
 };
 
-function EditEventModal({ product, categories, onClose }) {
+function EditEventModal({ product, categories, companies, onClose }) {
+    console.log(product)
 
-  const [title, setTitle] = useState(product.title);
+  const [name, setName] = useState(product.name);
   const [image, setImage] = useState(product.image);
   const [newImage, setNewImage] = useState("");
   const [isNewImageUploaded, setIsNewImageUploaded] = useState(false);
-  const [date, setDate] = useState(formatedDate);
-  const [hour, setHour] = useState(formatedHour);
-  const [place, setPlace] = useState(product.place);
-  const [address, setAddress] = useState(product.address);
+  const [price, setPrice] = useState(product.price);
+  const [description, setDescription] = useState(product.description);
   const [category, setCategory] = useState(product.category.id);
-  const [eventCategory, setEventCategory] = useState(product.category.category);
-
-  const [value, setValue] = useState({
-    startDate: date,
-    endDate: new Date().setMonth(11),
-  });
-
-  const handleValueChange = (newValue) => {
-    setValue(newValue);
-    console.log(newValue);
-    setDate(newValue.startDate);
-    console.log(moment(newValue.startDate).format("DD/MM/YYYY"));
-  };
+  const [productCategory, setProductCategory] = useState(product.category.category);
+  const [company, setCompany] = useState(product.company.id);
+  const [productCompany, setProductCompany] = useState(product.company.company);
 
   async function getCategoryId(name) {
     if (typeof name === undefined || name !== "") {
@@ -165,18 +157,22 @@ function EditEventModal({ product, categories, onClose }) {
     }
   }
 
-  const onIndexChange = (e, save) => {
-    getCategoryId(e.target.value);
+  const onCategoryChange = (e, save) => {
+    console.log(e.target.value)
     save(e.target.value);
-  };
+}
+
+const onCompanyChange = (e, save) => {
+    console.log(e.target.value)
+    save(e.target.value);
+}
 
   const onChange = (e, save) => {
     save(e.target.value);
   };
 
-  async function updateEvent() {
+  async function updateProduct() {
     try {
-      let formatedDate = moment(date).format("DD/MM/YYYY");
       let newImg = "";
       let showImgToast = true;
       setNewImage(IMAGE_URL !== "" ? IMAGE_URL : image);
@@ -189,11 +185,10 @@ function EditEventModal({ product, categories, onClose }) {
 
       if (isNewImageUploaded) {
         if (
-          title != "" &&
-          date != "" &&
-          hour != "" &&
-          place != "" &&
-          address != "" &&
+          name != "" &&
+          description != "" &&
+          price != "" &&
+          company != "" &&
           category != "" &&
           newImage != ""
         ) {
@@ -204,15 +199,14 @@ function EditEventModal({ product, categories, onClose }) {
             setNewImage(image);
             newImg = image;
           }
-          const response = await allProductServices.updateEvent(
-            product.id,
-            title,
+          const response = await allProductServices.updateProduct(
+            name,
             newImg,
-            formatedDate,
-            hour,
-            place,
-            address,
-            eventCategory
+            category,
+            description,
+            price,
+            company,
+            product.id,
           );
 
           if (!response.success) {
@@ -231,9 +225,9 @@ function EditEventModal({ product, categories, onClose }) {
       } else if (!isNewImageUploaded) {
         console.log("ok")
         if (
-          title != product.title && title != '' ||
-          place != product.place && place != '' ||
-          address != product.address && address != '' ||
+          name != product.name && name != '' ||
+          price != product.price && price != '' ||
+          description != product.description && description != '' ||
           (category != product.category.id && newImage != "")
         ) {
           console.log("1")
@@ -244,15 +238,14 @@ function EditEventModal({ product, categories, onClose }) {
             setNewImage(image);
             newImg = image;
           }
-          const response = await allProductServices.updateEvent(
-            product.id,
-            title,
+          const response = await allProductServices.updateProduct(
+            name,
             newImg,
-            formatedDate,
-            hour,
-            place,
-            address,
-            eventCategory
+            category,
+            description,
+            price,
+            company,
+            product.id,
           );
 
           if (!response.success) {
@@ -283,166 +276,67 @@ function EditEventModal({ product, categories, onClose }) {
 
   async function onSubmit(e) {
     e.preventDefault();
-    updateEvent();
+    updateProduct();
   }
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-10">
       <div className="bg-white w-10/12 md:w-1/2 py-2 px-4 rounded-lg shadow-md my-auto h-modal overflow-y-auto">
-        <h2 className="text-lg text-penn-blue font-montserrat font-extrabold">Editar evento</h2>
+        <h2 className="text-lg text-emerald-800 font-montserrat font-extrabold">Editar producto</h2>
         <div>
-          <form
-            action="post"
-            className="font-montserrat font-medium"
-            onSubmit={onSubmit}
-          >
-            <div className="p-4">
-              <label
-                htmlFor="eventName"
-                className="block mb-2 text-base text-emerald-800 font-bold"
-              >
-                Evento
-              </label>
-              <input
-                type="text"
-                id="title"
-                onChange={(e) => onChange(e, setTitle)}
-                value={title}
-                autoComplete="off"
-                placeholder="Nombre del evento"
-                className="block w-full mb-4 p-2 text-emerald-800 border border-dark-violet hover:border-violet-700 rounded-lg shadow-md text-base focus:ring-blue-500 focus:border-blue-500"
-              />
-              <div className="grid grid-flow-cols grid-cols-1 md:grid-cols-2">
-                <div className="mb-4 md:pr-2">
-                  <label
-                    htmlFor="date"
-                    className="block mb-2 text-base text-emerald-800 font-bold"
-                  >
-                    Fecha
-                  </label>
-                  <div id="date" className="relative w-full">
-                    <Datepicker
-                      containerClassName="border border-dark-violet rounded-lg hover:border-violet-700"
-                      inputClassName="font-medium border border-white rounded-lg w-full shadow-md"
-                      primaryColor={"indigo"}
-                      asSingle={true}
-                      useRange={false}
-                      value={value}
-                      defaultValue={date}
-                      displayFormat="DD/MM/YYYY"
-                      onChange={handleValueChange}
-                    />
-                  </div>
+            <form action="post" className="font-montserrat font-semibold" onSubmit={onSubmit}>
+                <div className="p-4">
+                    <label htmlFor="productName" className="block mb-2 text-base text-emerald-800">Producto</label>
+                    <input type="text" id="name" onChange={(e) => onChange(e, setName)} value={name} autoComplete="off" placeholder="Nombre del producto" className="block w-full mb-4 p-2 text-emerald-800 border border-emerald-600 hover:border-violet-700 rounded-lg shadow-md text-base focus:ring-blue-500 focus:border-blue-500" />            
+                    
+                    <label htmlFor="description" className="block mb-2 text-base text-emerald-800">Descripción del producto</label>
+                    <textarea type="text" id="description" onChange={(e) => onChange(e, setDescription)} value={description} autoComplete="off" placeholder="Descripción del producto" className="block w-full mb-4 p-2.5 text-emerald-800  border border-emerald-600 rounded-lg shadow-md text-base hover:border-violet-700 focus:ring-blue-500 focus:border-blue-500 resize-none" />
+                    <div className="grid grid-flow-cols grid-cols-1 md:grid-cols-2">
+                       <div className="mb-4 md:pr-2">
+                            <label htmlFor="productCategory" className="block mb-2 text-base text-emerald-800">Categoría</label>
+                            <Select id="productCategory"
+                                onChange={(e) => onCategoryChange(e, setCategory)}
+                                value={category}
+                                className="w-full mb-4 border border-emerald-600 rounded-lg shadow-md text-emerald-800 font-medium bg-white hover:border-violet-700 focus:ring-dark-violet focus:border-emerald-600">
+                                <option > </option>
+                                {categories.map((category) => {
+                                    return (
+                                        <option key={category.id} value={category.id}> {category.category} </option>
+                                    )
+                                })}
+                            </Select>
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="price" className="block mb-2 text-base text-emerald-800">Precio</label>
+                            <input type="number" id="price" step="0.01" onChange={(e) => onChange(e, setPrice)} value={price} autoComplete="off" placeholder="Precio" className="block w-full mb-4 p-2 text-emerald-800 border border-emerald-600 rounded-lg shadow-md text-base hover:border-violet-700 focus:ring-blue-500 focus:border-blue-500" />
+                        </div>
+                    </div>
+                    <div className="grid grid-flow-cols grid-cols-1 md:grid-cols-2">
+                        <div className="mb-4 md:pr-2">
+                            <label htmlFor="productCompany" className="block mb-2 text-base text-emerald-800">Marca del producto</label>
+                            <Select id="productCompany"
+                                onChange={(e) => onCompanyChange(e, setCompany)}
+                                value={company}
+                                className="w-full mb-4 border border-emerald-600 rounded-lg shadow-md text-emerald-800 font-medium bg-white hover:border-violet-700 focus:ring-dark-violet focus:border-emerald-600">
+                                <option > </option>
+                                {companies.map((company) => {
+                                    return (
+                                        <option key={company.id} value={company.id}> {company.company} </option>
+                                    )
+                                })}
+                            </Select>
+                        </div>
+                        <div id="fileUpload">
+                            <label htmlFor="image" className="block mb-2 text-base text-emerald-800">Imagen</label>
+                            <p className="block text-base text-emerald-800 truncate">{image}</p>
+                            <CloudinaryUploadWidget />
+                        </div>
+                    </div>
+                    <div className="flex justify-end mt-4">
+                        <SaveButton />
+                    </div>
                 </div>
-                <div className="mb-4">
-                  <label
-                    htmlFor="eventTime"
-                    className="block mb-2 text-base text-emerald-800 font-bold"
-                  >
-                    Hora
-                  </label>
-                  <div className="relative w-full">
-                    <input
-                      datepicker="true"
-                      datepicker-autohide="true"
-                      type="time"
-                      id="hour"
-                      onChange={(e) => onChange(e, setHour)}
-                      value={hour}
-                      className="border border-dark-violet text-gray-900 text-base rounded-lg shadow-md hover:border-violet-700 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      placeholder="Seleccione una hora"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="grid grid-flow-cols grid-cols-1 md:grid-cols-2">
-                <div className="mb-2 md:pr-2">
-                  <label
-                    htmlFor="eventCategory"
-                    className="block mb-2 text-base text-emerald-800 font-bold"
-                  >
-                    Categoría
-                  </label>
-                  <Select
-                    id="eventCategory"
-                    onChange={(e) => onIndexChange(e, setEventCategory)}
-                    value={eventCategory}
-                    defaultValue={product.category.category}
-                    className="relative w-full mb-4 border border-dark-violet rounded-lg shadow-md text-emerald-800 font-medium bg-white hover:border-violet-700 focus:ring-dark-violet focus:border-dark-violet"
-                  >
-                    {categories.map((category) => {
-                      return (
-                        <option key={category.id}> {category.category} </option>
-                      );
-                    })}
-                  </Select>
-                </div>
-                <div className="mb-2">
-                  <label
-                    htmlFor="place"
-                    className="block mb-2 text-base text-emerald-800 font-bold"
-                  >
-                    Lugar
-                  </label>
-                  <input
-                    type="text"
-                    id="place"
-                    onChange={(e) => onChange(e, setPlace)}
-                    value={place}
-                    autoComplete="off"
-                    placeholder="Lugar del evento"
-                    className="block w-full mb-4 p-2 text-emerald-800 border border-dark-violet rounded-lg shadow-md text-base hover:border-violet-700 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-              </div>
-              <label
-                htmlFor="address"
-                className="block text-base text-emerald-800 font-bold"
-              >
-                Dirección
-              </label>
-              <textarea
-                type="text"
-                id="address"
-                onChange={(e) => onChange(e, setAddress)}
-                value={address}
-                autoComplete="off"
-                placeholder="Dirección del evento"
-                className="block w-full mb-4 p-2.5 text-emerald-800  border border-dark-violet rounded-lg shadow-md text-base hover:border-violet-700 focus:ring-blue-500 focus:border-blue-500 resize-none"
-              />
-              <div className="w-full h-12 mb-8" id="fileUpload">
-                <label
-                  htmlFor="image"
-                  className="block text-base text-emerald-800 font-bold"
-                >
-                  Imagen
-                </label>
-                <p className="block text-base truncate text-emerald-800">
-                  {image}
-                </p>
-                <CloudinaryUploadWidget
-                  value={image}
-                  onChange={(e) => onChange(e, setImage)}
-                />
-              </div>
-            </div>
-            <div className="flex justify-end m-4">
-              <button
-                onClick={onClose}
-                className="rounded-lg bg-gray-500 hover:bg-gray-400 w-32 h-1/2 max-h-fit p-2 mr-2 text-white md:text-sm my-auto font-montserrat"
-                type="button"
-              >
-                <span>
-                  <CancelIcon
-                    className="mr-2 align-text-top"
-                    fontSize="small"
-                  />{" "}
-                  Cancelar{" "}
-                </span>
-              </button>
-              <SaveButton />
-            </div>
-          </form>
+            </form>
         </div>
       </div>
     </div>
