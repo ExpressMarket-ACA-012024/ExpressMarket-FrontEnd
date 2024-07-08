@@ -5,21 +5,21 @@ export const CLOUD_NAME = 'duxqteogb'
 export const UPLOAD_PRESET = 'jw3jwwpb'
 
 // Event
-export const fetchAllEvents = async ({ title, size, page }) => {
-    const response = await axios.get(`${BASE_URL}events/all${title}`,
+export const fetchAllProducts = async ({ title, size, page }) => {
+    const response = await axios.get(`${BASE_URL}product/get/all`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
             },
-            params: {
+            /*params: {
+                name: title,
                 size: size,
                 page: page
-            }
+            }*/
         });
-
-    const postResponse = await response.data;
-
-    return { items: postResponse.content, totalPages: postResponse.totalPages, totalElements: postResponse.totalElements, isNextPageAvailable: page + 1 < postResponse.totalPages }
+        
+    if (response.status === 200)
+        return response.data 
 };
 
 export const getOneEventById = async ({ id }) => {
@@ -122,21 +122,17 @@ export const changeEventStatus = async (id) => {
 }
 
 // Category
-export const fetchAllCategories = async ({ size, page }) => {
-    const response = await axios.get(`${BASE_URL}categories/`,
+export const fetchAllCategories = async () => {
+    const response = await axios.get(`${BASE_URL}category/get/all`,
         {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
             },
-            params: {
-                size: size,
-                page: page
-            }
         });
 
     const postResponse = await response.data;
 
-    return { items: postResponse, isNextPageAvailable: page + 1 < postResponse.pages }
+    return { items: postResponse }
 };
 
 export const getOneCategory = async ({ id }) => {

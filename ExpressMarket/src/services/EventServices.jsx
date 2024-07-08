@@ -1,13 +1,16 @@
 import axios from "axios";
-import { fetchAllEvents, createEvent, updateEvent, changeEventStatus, getOneEventById, getOneEventByTitle, getEventsByCategory } from "../helpers/AdminHelper";
+import { fetchAllProducts, createEvent, updateEvent, changeEventStatus, getOneEventById, getOneEventByTitle, getEventsByCategory } from "../helpers/AdminHelper";
 
 const services = {};
 
 export const allEventServices = {
-    getEvents: async (title, size, page) => {
+    getProducts: async (title, size, page) => {
         try {
-            const result = await fetchAllEvents( title, size, page )
-            return { items: result.items, totalPages: result.totalPages, totalElements: result.totalElements, isNextPageAvailable: result.isNextPageAvailable, success: true }
+            const result = await fetchAllProducts( title, size, page )
+            //return { items: result.items, totalPages: result.totalPages, totalElements: result.totalElements, isNextPageAvailable: result.isNextPageAvailable, success: true }
+            console.log("services")
+            console.log(result)
+            return { items: result, success: true }
         } catch (error) {
             return { items: [], success: false }
         }

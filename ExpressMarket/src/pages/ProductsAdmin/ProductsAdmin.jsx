@@ -17,7 +17,7 @@ const ProductsAdmin = () => {
     const [page, setPage] = useState(0);
     const [isNextPageAvailable, setIsNextPageAvailable] = useState(true);
     const [totalPages, setTotalPages] = useState(1)
-    const [events, setEvents] = useState([]);
+    const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [title, setTitle] = useState("");
     const [searchEvent, setSearchedEvent] = useState('')
@@ -25,26 +25,23 @@ const ProductsAdmin = () => {
     const [eventCategory, setEventCategory] = useState('')
 
     useEffect(() => {
-        let fetchEvents = async () => {
+        let fetchProducts = async () => {
             try {
                 const filters = { title: searchEvent, size: 12, page: page }
-                const response = await allEventServices.getEvents(filters)
-
-                setIsNextPageAvailable(response.isNextPageAvailable)
-                setTotalPages(response.totalPages)
+                const response = await allEventServices.getProducts(filters)
 
                 if (!response.success) {
                     throw new Error('Algo salió mal')
                 }
 
-                setEvents(response.items)
+                setProducts(response.items)
             } catch (error) {
                 console.error(error);
             }
         };
-        fetchEvents();
+        fetchProducts();
 
-        let fetchCategories = async () => {
+        /*let fetchCategories = async () => {
             try {
                 const filters = { title: title, size: 10, page: page }
                 let response = await allCategoryServices.getAllCategories(filters)
@@ -60,7 +57,7 @@ const ProductsAdmin = () => {
                 console.error(error);
             }
         };
-        fetchCategories();
+        fetchCategories();*/
     }, [page]);
 
     const next = () => {
@@ -117,7 +114,7 @@ const ProductsAdmin = () => {
             }
 
             toast("Evento encontrado", { type: 'success' })
-            setEvents(response.data)
+            //setProducts(response.data)
             setSearchedEvent('')
         } catch (error) {
             console.error({ error })
@@ -135,7 +132,7 @@ const ProductsAdmin = () => {
                 toast("No hay eventos en la categoría seleccionada", { type: "info" })
             } else {
                 toast("Eventos encontrados", { type: 'success' })
-                setEvents(response.data)
+                setProducts(response.data)
             }
 
             setSearchedEvent('')
@@ -148,7 +145,7 @@ const ProductsAdmin = () => {
         <div className="w-full max-w-full bg-light-gray">
             <NavbarAdmin />
             <div className="p-4">
-                <h1 className="text-pure-indigo font-montserrat font-bold text-5xl">Eventos</h1>
+                <h1 className="text-emerald-800 font-montserrat font-bold text-5xl mt-12">Productos</h1>
             </div>
             <div className="grid md:grid-cols-2 p-4 mt-4 w-full max-w-full">
                 <form className="mx-4" onSubmit={onSubmit}>
@@ -199,7 +196,7 @@ const ProductsAdmin = () => {
                 pauseOnHover
                 theme="colored"
             />
-            <ProductsAdminCard events={events} categories={categories} />
+            <ProductsAdminCard products={products} categories={categories} />
             <div className="text-center mx-auto mt-8">
                 <button className='rounded-full left-2 border border-pure-indigo bg-light-gray text-pure-indigo hover:bg-pure-indigo hover:text-white w-16 h-10 p-2 ml-4 md:text-sm my-auto font-montserrat' onClick={prev}>
                     <span><ArrowBackIcon /></span>
@@ -209,7 +206,7 @@ const ProductsAdmin = () => {
                 </button>
             </div>
             <div className="grid grid-cols-1 p-4 mt-4 max-w-full">
-                <h2 className="text-pure-indigo text-3xl font-montserrat">Agregar evento</h2>
+                <h2 className="text-emerald-600 text-3xl font-montserrat">Agregar producto</h2>
                 <hr className="mt-4 bg-penn-blue h-0.5" />
             </div>
             <div className="grid grid-cols-1 md:w-1/2 m-auto mb-8">
