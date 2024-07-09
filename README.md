@@ -121,7 +121,7 @@ Por un lado, nos permite tener una separación clara de responsabilidades, lo cu
 ## Compatibilidad de licencias
 
 
-- Link de documento para la compatibilidad de Licencias: https://github.com/Cj72001/Proyecto-IngSoft/blob/Add-manuales/Documentos/Compatibilidad%20de%20licencias.pdf
+- [![uca.png](https://drive.google.com/file/d/1RWQsY-kIMKvWCppwWLHYdGrCcI6psUZV/view?usp=drive_link)
 
 
 ## **Tipos de error**  <a name="error1"></a>
