@@ -121,7 +121,7 @@ Por un lado, nos permite tener una separación clara de responsabilidades, lo cu
 ## Compatibilidad de licencias
 
 
-- [![uca.png](https://drive.google.com/file/d/1RWQsY-kIMKvWCppwWLHYdGrCcI6psUZV/view?usp=drive_link)
+- Compatibilidad de Licencias: https://github.com/ExpressMarket-ACA-012024/ExpressMarket-FrontEnd/blob/main/Analisis%20de%20licencia/Analisis%20de%20licencia.jpeg
 
 
 ## **Tipos de error**  <a name="error1"></a>
